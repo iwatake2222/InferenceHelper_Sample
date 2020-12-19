@@ -63,6 +63,8 @@ int32_t ImageProcessor_finalize(void)
 		return -1;
 	}
 
+	s_classificationEngine.reset();
+
 	return 0;
 }
 

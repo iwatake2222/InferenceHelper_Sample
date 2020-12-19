@@ -26,21 +26,43 @@
 
 /* Model parameters */
 #if defined(INFERENCE_HELPER_ENABLE_OPENCV)
-#define MODEL_NAME   "mobilenetv2-1.0.onnx"
-#elif defined(INFERENCE_HELPER_ENABLE_TENSORRT)
-#define MODEL_NAME   "mobilenetv2-1.0.onnx"
-#elif defined(INFERENCE_HELPER_ENABLE_NCNN)
-#define MODEL_NAME   "mobilenetv2-1.0.param"
-#elif defined(INFERENCE_HELPER_ENABLE_MNN)
-#define MODEL_NAME   "mobilenetv2-1.0.mnn"
-#elif defined(INFERENCE_HELPER_ENABLE_TFLITE)
-#define MODEL_NAME   "mobilenetv2-1.0.tflite"
-#elif defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_GPU)
-#define MODEL_NAME   "mobilenetv2-1.0.tflite"
+#define MODEL_NAME  "mobilenetv2-1.0.onnx"
+#define INPUT_NAME  "data"
+#define OUTPUT_NAME "mobilenetv20_output_flatten0_reshape0"
+#define TENSORTYPE  TensorInfo::TENSOR_TYPE_FP32
+#elif defined(INFERENCE_HELPER_ENABLE_TFLITE) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_GPU) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_XNNPACK)
+#if 1
+#define MODEL_NAME   "mobilenet_v2_1.0_224.tflite"
+#define INPUT_NAME  "input"
+#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
+#define TENSORTYPE  TensorInfo::TENSOR_TYPE_FP32
+#else
+#define MODEL_NAME   "mobilenet_v2_1.0_224_quant.tflite"
+#define INPUT_NAME  "input"
+#define OUTPUT_NAME "output"
+#define TENSORTYPE  TensorInfo::TENSOR_TYPE_UINT8
+#endif
 #elif defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_EDGETPU)
-#define MODEL_NAME   "mobilenetv2-1.0.tflite"
-#elif defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_XNNPACK)
-#define MODEL_NAME   "mobilenetv2-1.0.tflite"
+#define MODEL_NAME   "mobilenet_v2_1.0_224_quant_edgetpu.tflite"
+#define INPUT_NAME  "input"
+#define OUTPUT_NAME "output"
+#define TENSORTYPE  TensorInfo::TENSOR_TYPE_UINT8
+#elif defined(INFERENCE_HELPER_ENABLE_TENSORRT)
+#define MODEL_NAME   "mobilenet_v2_1.0_224.onnx"
+//#define MODEL_NAME   "mobilenet_v2_1.0_224.trt"
+#define INPUT_NAME  "input"
+#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
+#define TENSORTYPE  TensorInfo::TENSOR_TYPE_FP32
+#elif defined(INFERENCE_HELPER_ENABLE_NCNN)
+#define MODEL_NAME   "mobilenet_v2_1.0_224.param"
+#define INPUT_NAME  "input"
+#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
+#define TENSORTYPE  TensorInfo::TENSOR_TYPE_FP32
+#elif defined(INFERENCE_HELPER_ENABLE_MNN)
+#define MODEL_NAME   "mobilenet_v2_1.0_224.mnn"
+#define INPUT_NAME  "input"
+#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
+#define TENSORTYPE  TensorInfo::TENSOR_TYPE_FP32
 #else
 #define MODEL_NAME   "error"
 #endif
@@ -58,8 +80,8 @@ int32_t ClassificationEngine::initialize(const std::string& workDir, const int32
 	/* Set input tensor info */
 	m_inputTensorList.clear();
 	InputTensorInfo inputTensorInfo;
-	inputTensorInfo.name = "data";
-	inputTensorInfo.tensorType = TensorInfo::TENSOR_TYPE_FP32;
+	inputTensorInfo.name = INPUT_NAME;
+	inputTensorInfo.tensorType = TENSORTYPE;
 	inputTensorInfo.tensorDims.batch = 1;
 	inputTensorInfo.tensorDims.width = 224;
 	inputTensorInfo.tensorDims.height = 224;
@@ -76,27 +98,27 @@ int32_t ClassificationEngine::initialize(const std::string& workDir, const int32
 	/* Set output tensor info */
 	m_outputTensorList.clear();
 	OutputTensorInfo outputTensorInfo;
-	outputTensorInfo.tensorType = TensorInfo::TENSOR_TYPE_FP32;
-	outputTensorInfo.name = "mobilenetv20_output_flatten0_reshape0";
+	outputTensorInfo.tensorType = TENSORTYPE;
+	outputTensorInfo.name = OUTPUT_NAME;
 	m_outputTensorList.push_back(outputTensorInfo);
 
 	/* Create and Initialize Inference Helper */
 #if defined(INFERENCE_HELPER_ENABLE_OPENCV)
 	m_inferenceHelper.reset(InferenceHelper::create(InferenceHelper::OPEN_CV));
+#elif defined(INFERENCE_HELPER_ENABLE_TFLITE)
+	m_inferenceHelper.reset(InferenceHelper::create(InferenceHelper::TENSORFLOW_LITE));
+#elif defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_XNNPACK)
+	m_inferenceHelper.reset(InferenceHelper::create(InferenceHelper::TENSORFLOW_LITE_XNNPACK));
+#elif defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_GPU)
+	m_inferenceHelper.reset(InferenceHelper::create(InferenceHelper::TENSORFLOW_LITE_GPU));
+#elif defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_EDGETPU)
+	m_inferenceHelper.reset(InferenceHelper::create(InferenceHelper::TENSORFLOW_LITE_EDGETPU));
 #elif defined(INFERENCE_HELPER_ENABLE_TENSORRT)
 	m_inferenceHelper.reset(InferenceHelper::create(InferenceHelper::TENSOR_RT));
 #elif defined(INFERENCE_HELPER_ENABLE_NCNN)
 	m_inferenceHelper.reset(InferenceHelper::create(InferenceHelper::NCNN));
 #elif defined(INFERENCE_HELPER_ENABLE_MNN)
 	m_inferenceHelper.reset(InferenceHelper::create(InferenceHelper::MNN));
-#elif defined(INFERENCE_HELPER_ENABLE_TFLITE)
-	m_inferenceHelper.reset(InferenceHelper::create(InferenceHelper::TENSORFLOW_LITE));
-#elif defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_GPU)
-	m_inferenceHelper.reset(InferenceHelper::create(InferenceHelper::TENSORFLOW_LITE_EDGETPU));
-#elif defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_EDGETPU)
-	m_inferenceHelper.reset(InferenceHelper::create(InferenceHelper::TENSORFLOW_LITE_GPU));
-#elif defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_XNNPACK)
-	m_inferenceHelper.reset(InferenceHelper::create(InferenceHelper::TENSORFLOW_LITE_XNNPACK));
 #else
 	PRINT_E("Inference Helper type is not selected\n");
 #endif
@@ -147,10 +169,12 @@ int32_t ClassificationEngine::invoke(const cv::Mat& originalMat, RESULT& result)
 		PRINT_E("Inference helper is not created\n");
 		return RET_ERR;
 	}
+
 	/*** PreProcess ***/
 	const auto& tPreProcess0 = std::chrono::steady_clock::now();
 	InputTensorInfo& inputTensorInfo = m_inputTensorList[0];
 #if 1
+	/** Use image data as input **/
 	/* do resize and color conversion here because some inference engine doesn't support these operations */
 	cv::Mat imgSrc;
 	cv::resize(originalMat, imgSrc, cv::Size(inputTensorInfo.tensorDims.width, inputTensorInfo.tensorDims.height));
@@ -169,7 +193,7 @@ int32_t ClassificationEngine::invoke(const cv::Mat& originalMat, RESULT& result)
 	inputTensorInfo.imageInfo.isBGR = false;
 	inputTensorInfo.imageInfo.swapColor = false;
 #else
-	/* Test other input format */
+	/** Use blob data as input (img->blob conversion is done by InferenceHelper::preProcessByOpenCV)**/
 	cv::Mat imgSrc;
 	inputTensorInfo.data = originalMat.data;
 	inputTensorInfo.dataType = InputTensorInfo::DATA_TYPE_IMAGE;
@@ -180,8 +204,13 @@ int32_t ClassificationEngine::invoke(const cv::Mat& originalMat, RESULT& result)
 	inputTensorInfo.imageInfo.cropY = 0;
 	inputTensorInfo.imageInfo.cropWidth = originalMat.cols;
 	inputTensorInfo.imageInfo.cropHeight = originalMat.rows;
+#ifdef CV_COLOR_IS_RGB
+	inputTensorInfo.imageInfo.isBGR = false;
+	inputTensorInfo.imageInfo.swapColor = false;
+#else
 	inputTensorInfo.imageInfo.isBGR = true;
 	inputTensorInfo.imageInfo.swapColor = true;
+#endif
 #if 0
 	InferenceHelper::preProcessByOpenCV(inputTensorInfo, false, imgSrc);
 	inputTensorInfo.dataType = InputTensorInfo::DATA_TYPE_BLOB_NHWC;
@@ -191,6 +220,7 @@ int32_t ClassificationEngine::invoke(const cv::Mat& originalMat, RESULT& result)
 #endif
 	inputTensorInfo.data = imgSrc.data;
 #endif
+
 	if (m_inferenceHelper->preProcess(m_inputTensorList) != InferenceHelper::RET_OK) {
 		return RET_ERR;
 	}

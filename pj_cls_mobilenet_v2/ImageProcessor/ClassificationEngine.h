@@ -26,16 +26,16 @@ public:
 	typedef struct RESULT_ {
 		int32_t     labelIndex;
 		std::string labelName;
-		float     score;
-		double    timePreProcess;		// [msec]
-		double    timeInference;		// [msec]
-		double    timePostProcess;	// [msec]
+		float       score;
+		double      timePreProcess;		// [msec]
+		double      timeInference;		// [msec]
+		double      timePostProcess;	// [msec]
 		RESULT_() : timePreProcess(0), timeInference(0), timePostProcess(0)
 		{}
 	} RESULT;
 
 private:
-	static constexpr bool WITH_BACKGROUND = false;
+	static constexpr bool WITH_BACKGROUND = true;
 	
 public:
 	ClassificationEngine() {}
