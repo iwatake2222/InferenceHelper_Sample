@@ -1,3 +1,9 @@
 [submodule "InferenceHelper"]
 	path = InferenceHelper
 	url = https://github.com/iwatake2222/InferenceHelper
+[submodule "third_party/tensorflow"]
+	path = third_party/tensorflow
+	url = https://github.com/tensorflow/tensorflow
+[submodule "third_party/edgetpu"]
+	path = third_party/edgetpu
+	url = https://github.com/google-coral/edgetpu
