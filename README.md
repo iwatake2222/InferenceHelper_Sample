@@ -8,7 +8,7 @@
 	- ncnn
 	- MNN
 
-- todo: class diagram comes here
+![Class Diagram](00_doc/class_diagram.png) 
 
 ## Tested Environment
 - Windows 10 (Visual Studio 2017 x64)
@@ -19,8 +19,8 @@
 ### Common 
 - Get source code
 	```sh
-	git clone https://github.com/iwatake2222/play_with_tflite.git
-	cd play_with_tflite
+	git clone https://github.com/iwatake2222/InferenceHelper_Sample
+	cd InferenceHelper_Sample
 
 	git submodule init
 	git submodule update
@@ -35,7 +35,7 @@
 
 ### Windows (Visual Studio)
 - Configure and Generate a new project using cmake-gui for Visual Studio 2017 64-bit
-	- `Where is the source code` : path-to-play_with_tflite/pj_tflite_cls_mobilenet_v2	(for example)
+	- `Where is the source code` : path-to-InferenceHelper_Sample/pj_cls_mobilenet_v2
 	- `Where to build the binaries` : path-to-build	(any)
 - Open `main.sln`
 - Set `main` project as a startup project, then build and run!
@@ -53,7 +53,8 @@ make
 ```
 
 ### Options (Select Deep Leraning framework)
-Choose one of the following options.
+- Choose one of the following options.
+	- *Note* : InferenceHelper itself supports multiple frameworks (i.e. you can set `on` for several framework)s. However, in this sample project the selected framework is used to `create` InferenceHelper instance for the sake of ease. 
 
 ```sh
 cmake .. \
