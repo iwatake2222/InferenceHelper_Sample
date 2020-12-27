@@ -11,11 +11,23 @@
 ![Class Diagram](00_doc/class_diagram.png) 
 
 ## Tested Environment
-- Windows 10 (Visual Studio 2017 x64)
-- Linux (Xubuntu 18.04 x64)
-- Linux (Jetson Xavier NX)
+| Framework                               | Windows (x64)                       | Linux (x64)   | Linux (armv7) | Linux (aarch64)  |
+|-----------------------------------------|-------------------------------------|---------------|---------------|------------------|
+| OpenCV(dnn)                             | OK                                  | OK            | OK            | OK               |
+| TensorFlow Lite                         | OK                                  | OK            | OK            | OK               |
+| TensorFlow Lite with delegate + XNNPACK | not supported (*)                   | OK            | OK            | OK               |
+| TensorFlow Lite with + GPU              | not supported (*)                   | OK            | not tested    | OK               |
+| TensorFlow Lite with + EdgeTPU          | not supported (*)                   | not tested    | OK            | OK               |
+| TensorRT                                | not tested                          | not tested    | not tested    | OK               |
+| ncnn                                    | OK                                  | OK            | OK            | OK               |
+| MNN                                     | OK                                  | OK            | OK            | OK               |
+| Note                                    | Visual Studio 2017 <br>* Need to build library for Windows             | Xubuntu 18.04 | Raspberry Pi  | Jetson Xavier NX |
+
 
 ## How to build sample application
+### Requirements
+- OpenCV 4.x
+
 ### Common 
 - Get source code
 	```sh
@@ -41,7 +53,7 @@
 - Set `main` project as a startup project, then build and run!
 
 **Note**
-When you use Tensorflow Lite in Visual Studio, use `Release` or `RelWithDebInfo` . If you use 'Debug', you will get exception error while running.
+When you use Tensorflow Lite in Visual Studio, use `Release` or `RelWithDebInfo` . If you use `Debug` , you will get exception error while running.
 
 ### Linux (PC Ubuntu, Raspberry Pi, Jetson Nano, etc.)
 ```sh
@@ -54,7 +66,7 @@ make
 
 ### Options (Select Deep Leraning framework)
 - Choose one of the following options.
-	- *Note* : InferenceHelper itself supports multiple frameworks (i.e. you can set `on` for several framework)s. However, in this sample project the selected framework is used to `create` InferenceHelper instance for the sake of ease. 
+	- *Note* : InferenceHelper itself supports multiple frameworks (i.e. you can set `on` for several frameworks). However, in this sample project the selected framework is used to `create` InferenceHelper instance for the sake of ease. 
 
 ```sh
 cmake .. \
