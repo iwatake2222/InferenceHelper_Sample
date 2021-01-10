@@ -61,6 +61,39 @@ cmake .. -DBUILD_SYSTEM=armv7
 
 You need to link appropreate OpenCV.
 
+### Android
+- Requirements
+	- Android Studio
+		- Compile Sdk Version
+			- 30
+		- Build Tools version
+			- 30.0.0
+		- Target SDK Version
+			- 30
+		- Min SDK Version
+			- 24
+			- With 23, I got the following error
+				- `bionic/libc/include/bits/fortify/unistd.h:174: undefined reference to `__write_chk'`
+				- https://github.com/android/ndk/issues/1179
+	- Android NDK
+		- 21.3.6528147
+	- OpenCV
+		- opencv-4.4.0-android-sdk.zip
+	- *The version is just the version I used
+
+- Configure NDK
+	- File -> Project Structure -> SDK Location -> Android NDK location
+		- C:\Users\abc\AppData\Local\Android\Sdk\ndk\21.3.6528147
+- Import OpenCV
+	- Download and extract OpenCV android-sdk (https://github.com/opencv/opencv/releases )
+	- File -> New -> Import Module
+		- path-to-opencv\opencv-4.3.0-android-sdk\OpenCV-android-sdk\sdk
+	- FIle -> Project Structure -> Dependencies -> app -> Declared Dependencies -> + -> Module Dependencies
+		- select sdk
+	- In case you cannot import OpenCV module, remove sdk module and dependency of app to sdk in Project Structure
+- Modify `ViewAndroid\app\src\main\cpp\CMakeLists.txt` to call image processor function you want to use.
+	- `set(ImageProcessor_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../../../pj_cls_mobilenet_v2/ImageProcessor")`
+- Copy `resource` directory to `/storage/emulated/0/Android/data/com.iwatake.viewandroidinferencehelpersample/files/Documents/resource` (<- e.g.) . The directory will be created after running the app (so the first run should fail because model files cannot be read)
 
 ### Options (Select Deep Leraning framework)
 - Choose one of the following options.
