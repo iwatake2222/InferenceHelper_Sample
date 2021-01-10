@@ -1,28 +1,8 @@
 # InferenceHelper_Sample
 - Sample project for InferenceHelper (https://github.com/iwatake2222/InferenceHelper )
-- Run a simple classification model (MobileNetv2) using several deep leraning frameworks:
-	- TensorFlow Lite
-	- TensorFlow Lite with delegate (GPU, XNNPACK, EdgeTPU)
-	- TensorRT
-	- OpenCV(dnn)
-	- ncnn
-	- MNN
+- Run a simple classification model (MobileNetv2) using several deep leraning frameworks
 
 ![Class Diagram](00_doc/class_diagram.png) 
-
-## Tested Environment
-| Framework                               | Windows (x64)                       | Linux (x64)   | Linux (armv7) | Linux (aarch64)  |
-|-----------------------------------------|-------------------------------------|---------------|---------------|------------------|
-| OpenCV(dnn)                             | OK                                  | OK            | OK            | OK               |
-| TensorFlow Lite                         | OK                                  | OK            | OK            | OK               |
-| TensorFlow Lite with delegate + XNNPACK | not supported (*)                   | OK            | OK            | OK               |
-| TensorFlow Lite with + GPU              | not supported (*)                   | OK            | not tested    | OK               |
-| TensorFlow Lite with + EdgeTPU          | not supported (*)                   | not tested    | OK            | OK               |
-| TensorRT                                | not tested                          | not tested    | not tested    | OK               |
-| ncnn                                    | OK                                  | OK            | OK            | OK               |
-| MNN                                     | OK                                  | OK            | OK            | OK               |
-| Note                                    | Visual Studio 2017 <br>* Need to build library for Windows             | Xubuntu 18.04 | Raspberry Pi  | Jetson Xavier NX |
-
 
 ## How to build sample application
 ### Requirements
@@ -34,16 +14,18 @@
 	git clone https://github.com/iwatake2222/InferenceHelper_Sample
 	cd InferenceHelper_Sample
 
-	git submodule init
-	git submodule update
-	cd third_party/tensorflow
+	git submodule update --init --recursive
+	cd InferenceHelper/ThirdParty/tensorflow
 	chmod +x tensorflow/lite/tools/make/download_dependencies.sh
 	tensorflow/lite/tools/make/download_dependencies.sh
 	```
 
-- Download prebuilt libraries and models
-	- Download prebuilt libraries (third_party.zip) and models (resource.zip) from https://github.com/iwatake2222/InferenceHelper_Sample/releases/ 
-	- Extract them to `third_party` and `resource`
+- Download prebuilt libraries
+	- Download prebuilt libraries (ThirdParty.zip) from https://github.com/iwatake2222/InferenceHelper/releases/ 
+	- Extract it to `InferenceHelper/ThirdParty/`
+- Download models
+	- Download models (resource.zip) from https://github.com/iwatake2222/InferenceHelper_Sample/releases/ 
+	- Extract it to `resource/`
 
 ### Windows (Visual Studio)
 - Configure and Generate a new project using cmake-gui for Visual Studio 2017 64-bit
@@ -63,6 +45,22 @@ cmake ..
 make
 ./main
 ```
+
+### Linux (Cross compile for armv7 and aarch64)
+```
+sudo apt install g++-arm-linux-gnueabi g++-arm-linux-gnueabihf g++-aarch64-linux-gnu
+
+export CC=aarch64-linux-gnu-gcc
+export CXX=aarch64-linux-gnu-g++
+cmake .. -DBUILD_SYSTEM=aarch64
+
+export CC=arm-linux-gnueabi-gcc
+export CXX=arm-linux-gnueabi-g++
+cmake .. -DBUILD_SYSTEM=armv7
+```
+
+You need to link appropreate OpenCV.
+
 
 ### Options (Select Deep Leraning framework)
 - Choose one of the following options.

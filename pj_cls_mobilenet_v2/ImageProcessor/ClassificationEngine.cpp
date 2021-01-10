@@ -159,6 +159,7 @@ int32_t ClassificationEngine::finalize()
 		return RET_ERR;
 	}
 	m_inferenceHelper->finalize();
+	m_inferenceHelper.reset();
 	return RET_OK;
 }
 

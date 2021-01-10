@@ -11,7 +11,6 @@ target_include_directories(${LibraryName} PUBLIC ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(${LibraryName} ${OpenCV_LIBS})
 
 set(INFERENCE_HELPER_DIR ${CMAKE_CURRENT_LIST_DIR}/../../InferenceHelper/)
-set(THIRD_PARTY_DIR ${CMAKE_CURRENT_LIST_DIR}/../../third_party/)
 # Link Common Helper module
 add_subdirectory(${INFERENCE_HELPER_DIR}/CommonHelper CommonHelper)
 target_include_directories(${LibraryName} PUBLIC ${INFERENCE_HELPER_DIR}/CommonHelper)
