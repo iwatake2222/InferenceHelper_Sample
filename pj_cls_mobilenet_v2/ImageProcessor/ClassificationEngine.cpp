@@ -30,7 +30,7 @@
 #define INPUT_NAME  "data"
 #define OUTPUT_NAME "mobilenetv20_output_flatten0_reshape0"
 #define TENSORTYPE  TensorInfo::TENSOR_TYPE_FP32
-#elif defined(INFERENCE_HELPER_ENABLE_TFLITE) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_GPU) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_XNNPACK)
+#elif defined(INFERENCE_HELPER_ENABLE_TFLITE) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_XNNPACK) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_GPU) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_NNAPI)
 #if 1
 #define MODEL_NAME   "mobilenet_v2_1.0_224.tflite"
 #define INPUT_NAME  "input"
@@ -113,6 +113,8 @@ int32_t ClassificationEngine::initialize(const std::string& workDir, const int32
 	m_inferenceHelper.reset(InferenceHelper::create(InferenceHelper::TENSORFLOW_LITE_GPU));
 #elif defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_EDGETPU)
 	m_inferenceHelper.reset(InferenceHelper::create(InferenceHelper::TENSORFLOW_LITE_EDGETPU));
+#elif defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_NNAPI)
+	m_inferenceHelper.reset(InferenceHelper::create(InferenceHelper::TENSORFLOW_LITE_NNAPI));
 #elif defined(INFERENCE_HELPER_ENABLE_TENSORRT)
 	m_inferenceHelper.reset(InferenceHelper::create(InferenceHelper::TENSOR_RT));
 #elif defined(INFERENCE_HELPER_ENABLE_NCNN)

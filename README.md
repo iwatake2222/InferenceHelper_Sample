@@ -82,8 +82,14 @@ You need to link appropreate OpenCV.
 	- *The version is just the version I used
 
 - Configure NDK
-	- File -> Project Structure -> SDK Location -> Android NDK location
+	- File -> Project Structure -> SDK Location -> Android NDK location (before Android Studio 4.0)
 		- C:\Users\abc\AppData\Local\Android\Sdk\ndk\21.3.6528147
+	- Modify `local.properties` to specify `sdk.dir` and `ndk.dir`  (after Android Studio 4.1)
+		```
+		sdk.dir=C\:\\Users\\xxx\\AppData\\Local\\Android\\Sdk
+		ndk.dir=C\:\\Users\\xxx\\AppData\\Local\\Android\\sdk\\ndk\\22.0.7026061
+		```
+
 - Import OpenCV
 	- Download and extract OpenCV android-sdk (https://github.com/opencv/opencv/releases )
 	- File -> New -> Import Module
@@ -106,6 +112,7 @@ cmake .. \
 -DINFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_XNNPACK=off \
 -DINFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_GPU=off \
 -DINFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_EDGETPU=off \
+-DINFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_NNAPI=off \
 -DINFERENCE_HELPER_ENABLE_TENSORRT=off \
 -DINFERENCE_HELPER_ENABLE_NCNN=off \
 -DINFERENCE_HELPER_ENABLE_MNN=on
