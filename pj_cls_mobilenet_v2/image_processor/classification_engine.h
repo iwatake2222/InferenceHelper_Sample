@@ -49,8 +49,8 @@ public:
     } RESULT;
 
 private:
-    static constexpr bool kWithBackground = true;
-    
+    bool with_background = true;
+
 public:
     ClassificationEngine() {}
     ~ClassificationEngine() {}

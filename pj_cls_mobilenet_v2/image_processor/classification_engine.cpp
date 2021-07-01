@@ -159,6 +159,9 @@ int32_t ClassificationEngine::Initialize(const std::string& work_dir, const int3
     }
 
     /* read label */
+#if defined(INFERENCE_HELPER_ENABLE_OPENCV)
+    with_background = false;
+#endif
     if (ReadLabel(label_filename, label_list_) != kRetOk) {
         return kRetErr;
     }
@@ -284,7 +287,7 @@ int32_t ClassificationEngine::ReadLabel(const std::string& filename, std::vector
         return kRetErr;
     }
     label_list.clear();
-    if (kWithBackground) {
+    if (with_background) {
         label_list.push_back("background");
     }
     std::string str;
