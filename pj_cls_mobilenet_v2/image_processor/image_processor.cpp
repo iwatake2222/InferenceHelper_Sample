@@ -16,9 +16,9 @@
 #include <opencv2/opencv.hpp>
 
 /* for My modules */
-#include "CommonHelper.h"
-#include "ClassificationEngine.h"
-#include "ImageProcessor.h"
+#include "common_helper.h"
+#include "classification_engine.h"
+#include "image_processor.h"
 
 /*** Macro ***/
 #define TAG "ImageProcessor"

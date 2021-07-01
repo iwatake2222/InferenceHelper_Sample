@@ -15,9 +15,9 @@
 #include <opencv2/opencv.hpp>
 
 /* for My modules */
-#include "CommonHelper.h"
-#include "InferenceHelper.h"
-#include "ClassificationEngine.h"
+#include "common_helper.h"
+#include "inference_helper.h"
+#include "classification_engine.h"
 
 /*** Macro ***/
 #define TAG "ClassificationEngine"
