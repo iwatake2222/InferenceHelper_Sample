@@ -77,6 +77,11 @@ limitations under the License.
 #define INPUT_NAME  "input"
 #define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#elif defined(INFERENCE_HELPER_ENABLE_SNPE)
+#define MODEL_NAME  "mobilenet_v2_1.0_224.dlc"
+#define INPUT_NAME  "input:0"
+#define OUTPUT_NAME "MobilenetV2/Predictions/Softmax:0"
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #else
 #define MODEL_NAME  "error"
 #endif
@@ -127,6 +132,8 @@ int32_t ClassificationEngine::Initialize(const std::string& work_dir, const int3
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kNcnn));
 #elif defined(INFERENCE_HELPER_ENABLE_MNN)
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kMnn));
+#elif defined(INFERENCE_HELPER_ENABLE_SNPE)
+    inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kSnpe));
 #else
     PRINT_E("Inference Helper type is not selected\n");
 #endif

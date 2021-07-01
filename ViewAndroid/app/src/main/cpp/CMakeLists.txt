@@ -82,8 +82,9 @@ set(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_NNAPI OFF CACHE BOOL "TFLITE_DELEGAT
 set(INFERENCE_HELPER_ENABLE_TENSORRT OFF CACHE BOOL "TENSORRT" FORCE)
 set(INFERENCE_HELPER_ENABLE_NCNN OFF CACHE BOOL "NCNN" FORCE)
 set(INFERENCE_HELPER_ENABLE_MNN ON CACHE BOOL "MNN" FORCE)
+set(INFERENCE_HELPER_ENABLE_SNPE OFF CACHE BOOL "SNPE" FORCE)
 
-set(ImageProcessor_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../../../pj_cls_mobilenet_v2/ImageProcessor")
+set(ImageProcessor_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../../../pj_cls_mobilenet_v2/image_processor")
 message(${ImageProcessor_DIR})
 add_subdirectory(${ImageProcessor_DIR} ImageProcessor)
 target_include_directories(native-lib PUBLIC ${ImageProcessor_DIR})
