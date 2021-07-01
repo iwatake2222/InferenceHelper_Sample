@@ -26,24 +26,23 @@ namespace cv {
     class Mat;
 };
 
+typedef struct {
+    char     work_dir[256];
+    int32_t  num_threads;
+} InputParam;
 
 typedef struct {
-    char     workDir[256];
-    int32_t  numThreads;
-} INPUT_PARAM;
-
-typedef struct {
-    int32_t classId;
+    int32_t class_id;
     char    label[256];
     double  score;
-    double  timePreProcess;   // [msec]
-    double  timeInference;    // [msec]
-    double  timePostProcess;  // [msec]
-} OUTPUT_PARAM;
+    double  time_pre_process;   // [msec]
+    double  time_inference;    // [msec]
+    double  time_post_process;  // [msec]
+} OutputParam;
 
-int32_t ImageProcessor_initialize(const INPUT_PARAM* inputParam);
-int32_t ImageProcessor_process(cv::Mat* mat, OUTPUT_PARAM* outputParam);
-int32_t ImageProcessor_finalize(void);
-int32_t ImageProcessor_command(int32_t cmd);
+int32_t ImageProcessor_Initialize(const InputParam* inputParam);
+int32_t ImageProcessor_Process(cv::Mat* mat, OutputParam* outputParam);
+int32_t ImageProcessor_Finalize(void);
+int32_t ImageProcessor_Command(int32_t cmd);
 
 #endif

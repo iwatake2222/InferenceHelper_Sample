@@ -19,9 +19,9 @@ Java_com_iwatake_viewandroidinferencehelpersample_MainActivity_ImageProcessorIni
 
     std::lock_guard<std::mutex> lock(g_mtx);
     int ret = 0;
-    INPUT_PARAM inputParam;
-    snprintf(inputParam.workDir, sizeof(inputParam.workDir), WORK_DIR);
-    inputParam.numThreads = 4;
+    InputParam inputParam;
+    snprintf(inputParam.work_dir, sizeof(inputParam.work_dir), WORK_DIR);
+    inputParam.num_threads = 4;
     ret = ImageProcessor_initialize(&inputParam);
     return ret;
 }
@@ -35,7 +35,7 @@ Java_com_iwatake_viewandroidinferencehelpersample_MainActivity_ImageProcessorPro
     std::lock_guard<std::mutex> lock(g_mtx);
     int ret = 0;
     cv::Mat* mat = (cv::Mat*) objMat;
-    OUTPUT_PARAM outputParam;
+    OutputParam outputParam;
     ret = ImageProcessor_process(mat, &outputParam);
     return ret;
 }

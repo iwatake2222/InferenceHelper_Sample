@@ -40,10 +40,10 @@ limitations under the License.
 #define PRINT_E(...) COMMON_HELPER_PRINT_E(TAG, __VA_ARGS__)
 
 /*** Global variable ***/
-std::unique_ptr<ClassificationEngine> s_classificationEngine;
+std::unique_ptr<ClassificationEngine> s_classification_engine;
 
 /*** Function ***/
-static cv::Scalar createCvColor(int32_t b, int32_t g, int32_t r) {
+static cv::Scalar CreateCvColor(int32_t b, int32_t g, int32_t r) {
 #ifdef CV_COLOR_IS_RGB
     return cv::Scalar(r, g, b);
 #else
@@ -52,40 +52,40 @@ static cv::Scalar createCvColor(int32_t b, int32_t g, int32_t r) {
 }
 
 
-int32_t ImageProcessor_initialize(const INPUT_PARAM* inputParam)
+int32_t ImageProcessor_Initialize(const InputParam* inputParam)
 {
-    if (s_classificationEngine) {
+    if (s_classification_engine) {
         PRINT_E("Already initialized\n");
         return -1;
     }
 
-    s_classificationEngine.reset(new ClassificationEngine());
-    if (s_classificationEngine->initialize(inputParam->workDir, inputParam->numThreads) != ClassificationEngine::RET_OK) {
+    s_classification_engine.reset(new ClassificationEngine());
+    if (s_classification_engine->Initialize(inputParam->work_dir, inputParam->num_threads) != ClassificationEngine::kRetOk) {
         return -1;
     }
     return 0;
 }
 
-int32_t ImageProcessor_finalize(void)
+int32_t ImageProcessor_Finalize(void)
 {
-    if (!s_classificationEngine) {
+    if (!s_classification_engine) {
         PRINT_E("Not initialized\n");
         return -1;
     }
 
-    if (s_classificationEngine->finalize() != ClassificationEngine::RET_OK) {
+    if (s_classification_engine->Finalize() != ClassificationEngine::kRetOk) {
         return -1;
     }
 
-    s_classificationEngine.reset();
+    s_classification_engine.reset();
 
     return 0;
 }
 
 
-int32_t ImageProcessor_command(int32_t cmd)
+int32_t ImageProcessor_Command(int32_t cmd)
 {
-    if (!s_classificationEngine) {
+    if (!s_classification_engine) {
         PRINT_E("Not initialized\n");
         return -1;
     }
@@ -99,32 +99,32 @@ int32_t ImageProcessor_command(int32_t cmd)
 }
 
 
-int32_t ImageProcessor_process(cv::Mat* mat, OUTPUT_PARAM* outputParam)
+int32_t ImageProcessor_Process(cv::Mat* mat, OutputParam* outputParam)
 {
-    if (!s_classificationEngine) {
+    if (!s_classification_engine) {
         PRINT_E("Not initialized\n");
         return -1;
     }
 
     cv::Mat& originalMat = *mat;
     ClassificationEngine::RESULT result;
-    if (s_classificationEngine->invoke(originalMat, result) != ClassificationEngine::RET_OK) {
+    if (s_classification_engine->Process(originalMat, result) != ClassificationEngine::kRetOk) {
         return -1;
     }
 
     /* Draw the result */
-    std::string resultStr;
-    resultStr = "Result:" + result.labelName + " (score = " + std::to_string(result.score) + ")";
-    cv::putText(originalMat, resultStr, cv::Point(10, 10), cv::FONT_HERSHEY_PLAIN, 1, createCvColor(0, 0, 0), 3);
-    cv::putText(originalMat, resultStr, cv::Point(10, 10), cv::FONT_HERSHEY_PLAIN, 1, createCvColor(0, 255, 0), 1);
+    std::string result_str;
+    result_str = "Result:" + result.class_name + " (score = " + std::to_string(result.score) + ")";
+    cv::putText(originalMat, result_str, cv::Point(10, 10), cv::FONT_HERSHEY_PLAIN, 1, CreateCvColor(0, 0, 0), 3);
+    cv::putText(originalMat, result_str, cv::Point(10, 10), cv::FONT_HERSHEY_PLAIN, 1, CreateCvColor(0, 255, 0), 1);
 
     /* Return the results */
-    outputParam->classId = result.labelIndex;
-    snprintf(outputParam->label, sizeof(outputParam->label), "%s", result.labelName.c_str());
+    outputParam->class_id = result.class_id;
+    snprintf(outputParam->label, sizeof(outputParam->label), "%s", result.class_name.c_str());
     outputParam->score = result.score;
-    outputParam->timePreProcess = result.timePreProcess;
-    outputParam->timeInference = result.timeInference;
-    outputParam->timePostProcess = result.timePostProcess;
+    outputParam->time_pre_process = result.time_pre_process;
+    outputParam->time_inference = result.time_inference;
+    outputParam->time_post_process = result.time_post_process;
 
     return 0;
 }
