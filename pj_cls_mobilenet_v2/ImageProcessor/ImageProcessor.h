@@ -9,22 +9,22 @@
 #include <array>
 
 namespace cv {
-	class Mat;
+    class Mat;
 };
 
 
 typedef struct {
-	char     workDir[256];
-	int32_t  numThreads;
+    char     workDir[256];
+    int32_t  numThreads;
 } INPUT_PARAM;
 
 typedef struct {
-	int32_t classId;
-	char    label[256];
-	double  score;
-	double  timePreProcess;   // [msec]
-	double  timeInference;    // [msec]
-	double  timePostProcess;  // [msec]
+    int32_t classId;
+    char    label[256];
+    double  score;
+    double  timePreProcess;   // [msec]
+    double  timeInference;    // [msec]
+    double  timePostProcess;  // [msec]
 } OUTPUT_PARAM;
 
 int32_t ImageProcessor_initialize(const INPUT_PARAM* inputParam);
