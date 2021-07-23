@@ -26,6 +26,9 @@ namespace cv {
     class Mat;
 };
 
+namespace ImageProcessor
+{
+
 typedef struct {
     char     work_dir[256];
     int32_t  num_threads;
@@ -40,9 +43,11 @@ typedef struct {
     double  time_post_process;  // [msec]
 } OutputParam;
 
-int32_t ImageProcessor_Initialize(const InputParam* inputParam);
-int32_t ImageProcessor_Process(cv::Mat* mat, OutputParam* outputParam);
-int32_t ImageProcessor_Finalize(void);
-int32_t ImageProcessor_Command(int32_t cmd);
+int32_t Initialize(const InputParam* inputParam);
+int32_t Process(cv::Mat* mat, OutputParam* outputParam);
+int32_t Finalize(void);
+int32_t Command(int32_t cmd);
+
+}
 
 #endif

@@ -42,6 +42,7 @@ limitations under the License.
 /*** Global variable ***/
 std::unique_ptr<ClassificationEngine> s_classification_engine;
 
+
 /*** Function ***/
 static cv::Scalar CreateCvColor(int32_t b, int32_t g, int32_t r) {
 #ifdef CV_COLOR_IS_RGB
@@ -52,7 +53,7 @@ static cv::Scalar CreateCvColor(int32_t b, int32_t g, int32_t r) {
 }
 
 
-int32_t ImageProcessor_Initialize(const InputParam* inputParam)
+int32_t ImageProcessor::Initialize(const ImageProcessor::InputParam* inputParam)
 {
     if (s_classification_engine) {
         PRINT_E("Already initialized\n");
@@ -66,7 +67,7 @@ int32_t ImageProcessor_Initialize(const InputParam* inputParam)
     return 0;
 }
 
-int32_t ImageProcessor_Finalize(void)
+int32_t ImageProcessor::Finalize(void)
 {
     if (!s_classification_engine) {
         PRINT_E("Not initialized\n");
@@ -83,7 +84,7 @@ int32_t ImageProcessor_Finalize(void)
 }
 
 
-int32_t ImageProcessor_Command(int32_t cmd)
+int32_t ImageProcessor::Command(int32_t cmd)
 {
     if (!s_classification_engine) {
         PRINT_E("Not initialized\n");
@@ -99,7 +100,7 @@ int32_t ImageProcessor_Command(int32_t cmd)
 }
 
 
-int32_t ImageProcessor_Process(cv::Mat* mat, OutputParam* outputParam)
+int32_t ImageProcessor::Process(cv::Mat* mat, ImageProcessor::OutputParam* outputParam)
 {
     if (!s_classification_engine) {
         PRINT_E("Not initialized\n");

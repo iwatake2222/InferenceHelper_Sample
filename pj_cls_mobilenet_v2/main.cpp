@@ -40,18 +40,18 @@ int32_t main()
 {
     /*** Initialize ***/
     /* Initialize image processor library */
-    InputParam input_param;
+    ImageProcessor::InputParam input_param;
     snprintf(input_param.work_dir, sizeof(input_param.work_dir), WORK_DIR);
     input_param.num_threads = 4;
-    ImageProcessor_Initialize(&input_param);
+    ImageProcessor::Initialize(&input_param);
 
 #ifdef SPEED_TEST_ONLY
     /* Read an input image */
     cv::Mat original_image = cv::imread(IMAGE_NAME);
 
     /* Call image processor library */
-    OutputParam output_param;
-    ImageProcessor_Process(&original_image, &output_param);
+    ImageProcessor::OutputParam output_param;
+    ImageProcessor::Process(&original_image, &output_param);
 
     cv::imshow("original_image", original_image);
     cv::waitKey(1);
@@ -62,7 +62,7 @@ int32_t main()
     double time_post_process = 0;
     const auto& t0 = std::chrono::steady_clock::now();
     for (int32_t i = 0; i < LOOP_NUM_FOR_TIME_MEASUREMENT; i++) {
-        ImageProcessor_Process(&original_image, &output_param);
+        ImageProcessor::Process(&original_image, &output_param);
         time_pre_process += output_param.time_pre_process;
         time_inference += output_param.time_inference;
         time_post_process += output_param.time_post_process;
@@ -93,8 +93,8 @@ int32_t main()
 
         /* Call image processor library */
         const auto& time_process0 = std::chrono::steady_clock::now();
-        OutputParam output_param;
-        ImageProcessor_Process(&original_image, &output_param);
+        ImageProcessor::OutputParam output_param;
+        ImageProcessor::Process(&original_image, &output_param);
         const auto& time_process1 = std::chrono::steady_clock::now();
 
         cv::imshow("test", original_image);
@@ -110,7 +110,7 @@ int32_t main()
 #endif
 
     /* Fianlize image processor library */
-    ImageProcessor_Finalize();
+    ImageProcessor::Finalize();
 
     return 0;
 }
