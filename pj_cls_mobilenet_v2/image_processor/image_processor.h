@@ -43,8 +43,8 @@ typedef struct {
     double  time_post_process;  // [msec]
 } OutputParam;
 
-int32_t Initialize(const InputParam* inputParam);
-int32_t Process(cv::Mat* mat, OutputParam* outputParam);
+int32_t Initialize(const InputParam* input_param);
+int32_t Process(cv::Mat* mat, OutputParam* output_param);
 int32_t Finalize(void);
 int32_t Command(int32_t cmd);
 

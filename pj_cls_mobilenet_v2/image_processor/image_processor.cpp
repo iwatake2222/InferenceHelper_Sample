@@ -53,7 +53,7 @@ static cv::Scalar CreateCvColor(int32_t b, int32_t g, int32_t r) {
 }
 
 
-int32_t ImageProcessor::Initialize(const ImageProcessor::InputParam* inputParam)
+int32_t ImageProcessor::Initialize(const ImageProcessor::InputParam* input_param)
 {
     if (s_classification_engine) {
         PRINT_E("Already initialized\n");
@@ -61,7 +61,7 @@ int32_t ImageProcessor::Initialize(const ImageProcessor::InputParam* inputParam)
     }
 
     s_classification_engine.reset(new ClassificationEngine());
-    if (s_classification_engine->Initialize(inputParam->work_dir, inputParam->num_threads) != ClassificationEngine::kRetOk) {
+    if (s_classification_engine->Initialize(input_param->work_dir, input_param->num_threads) != ClassificationEngine::kRetOk) {
         return -1;
     }
     return 0;
@@ -100,7 +100,7 @@ int32_t ImageProcessor::Command(int32_t cmd)
 }
 
 
-int32_t ImageProcessor::Process(cv::Mat* mat, ImageProcessor::OutputParam* outputParam)
+int32_t ImageProcessor::Process(cv::Mat* mat, ImageProcessor::OutputParam* output_param)
 {
     if (!s_classification_engine) {
         PRINT_E("Not initialized\n");
@@ -120,12 +120,12 @@ int32_t ImageProcessor::Process(cv::Mat* mat, ImageProcessor::OutputParam* outpu
     cv::putText(originalMat, result_str, cv::Point(10, 10), cv::FONT_HERSHEY_PLAIN, 1, CreateCvColor(0, 255, 0), 1);
 
     /* Return the results */
-    outputParam->class_id = result.class_id;
-    snprintf(outputParam->label, sizeof(outputParam->label), "%s", result.class_name.c_str());
-    outputParam->score = result.score;
-    outputParam->time_pre_process = result.time_pre_process;
-    outputParam->time_inference = result.time_inference;
-    outputParam->time_post_process = result.time_post_process;
+    output_param->class_id = result.class_id;
+    snprintf(output_param->label, sizeof(output_param->label), "%s", result.class_name.c_str());
+    output_param->score = result.score;
+    output_param->time_pre_process = result.time_pre_process;
+    output_param->time_inference = result.time_inference;
+    output_param->time_post_process = result.time_post_process;
 
     return 0;
 }

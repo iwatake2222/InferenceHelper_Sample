@@ -63,8 +63,8 @@ private:
 
 private:
     std::unique_ptr<InferenceHelper> inference_helper_;
-    std::vector<InputTensorInfo> input_tensor_list_;
-    std::vector<OutputTensorInfo> output_tensor_list_;
+    std::vector<InputTensorInfo> input_tensor_info_list_;
+    std::vector<OutputTensorInfo> output_tensor_info_list_;
     std::vector<std::string> label_list_;
 };
 

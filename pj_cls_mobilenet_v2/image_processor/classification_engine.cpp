@@ -109,7 +109,7 @@ int32_t ClassificationEngine::Initialize(const std::string& work_dir, const int3
     std::string label_filename = work_dir + "/model/" + LABEL_NAME;
 
     /* Set input tensor info */
-    input_tensor_list_.clear();
+    input_tensor_info_list_.clear();
     InputTensorInfo input_tensor_info(INPUT_NAME, TENSORTYPE);
     input_tensor_info.tensor_dims = { 1, 224, 224, 3 };
     input_tensor_info.data_type = InputTensorInfo::kDataTypeImage;
@@ -119,11 +119,11 @@ int32_t ClassificationEngine::Initialize(const std::string& work_dir, const int3
     input_tensor_info.normalize.norm[0] = 0.229f;
     input_tensor_info.normalize.norm[1] = 0.224f;
     input_tensor_info.normalize.norm[2] = 0.225f;
-    input_tensor_list_.push_back(input_tensor_info);
+    input_tensor_info_list_.push_back(input_tensor_info);
 
     /* Set output tensor info */
-    output_tensor_list_.clear();
-    output_tensor_list_.push_back(OutputTensorInfo(OUTPUT_NAME, TENSORTYPE));
+    output_tensor_info_list_.clear();
+    output_tensor_info_list_.push_back(OutputTensorInfo(OUTPUT_NAME, TENSORTYPE));
 
     /* Create and Initialize Inference Helper */
 #if defined(INFERENCE_HELPER_ENABLE_OPENCV)
@@ -158,13 +158,13 @@ int32_t ClassificationEngine::Initialize(const std::string& work_dir, const int3
         inference_helper_.reset();
         return kRetErr;
     }
-    if (inference_helper_->Initialize(model_filename, input_tensor_list_, output_tensor_list_) != InferenceHelper::kRetOk) {
+    if (inference_helper_->Initialize(model_filename, input_tensor_info_list_, output_tensor_info_list_) != InferenceHelper::kRetOk) {
         inference_helper_.reset();
         return kRetErr;
     }
 
     /* Check if input tensor info is set */
-    for (const auto& input_tensor_info : input_tensor_list_) {
+    for (const auto& input_tensor_info : input_tensor_info_list_) {
         if ((input_tensor_info.tensor_dims.width <= 0) || (input_tensor_info.tensor_dims.height <= 0) || input_tensor_info.tensor_type == TensorInfo::kTensorTypeNone) {
             PRINT_E("Invalid tensor size\n");
             inference_helper_.reset();
@@ -204,7 +204,7 @@ int32_t ClassificationEngine::Process(const cv::Mat& original_mat, RESULT& resul
 
     /*** PreProcess ***/
     const auto& t_pre_process0 = std::chrono::steady_clock::now();
-    InputTensorInfo& input_tensor_info = input_tensor_list_[0];
+    InputTensorInfo& input_tensor_info = input_tensor_info_list_[0];
 #if 1
     /** Use image data as input **/
     /* do resize and color conversion here because some inference engine doesn't support these operations */
@@ -253,14 +253,14 @@ int32_t ClassificationEngine::Process(const cv::Mat& original_mat, RESULT& resul
     input_tensor_info.data = img_src.data;
 #endif
 
-    if (inference_helper_->PreProcess(input_tensor_list_) != InferenceHelper::kRetOk) {
+    if (inference_helper_->PreProcess(input_tensor_info_list_) != InferenceHelper::kRetOk) {
         return kRetErr;
     }
     const auto& t_pre_process1 = std::chrono::steady_clock::now();
 
     /*** Inference ***/
     const auto& t_inference0 = std::chrono::steady_clock::now();
-    if (inference_helper_->Process(output_tensor_list_) != InferenceHelper::kRetOk) {
+    if (inference_helper_->Process(output_tensor_info_list_) != InferenceHelper::kRetOk) {
         return kRetErr;
     }
     const auto& t_inference1 = std::chrono::steady_clock::now();
@@ -269,8 +269,8 @@ int32_t ClassificationEngine::Process(const cv::Mat& original_mat, RESULT& resul
     const auto& t_post_process0 = std::chrono::steady_clock::now();
     /* Retrieve the result */
     std::vector<float> output_score_list;
-    output_score_list.resize(output_tensor_list_[0].tensor_dims.width * output_tensor_list_[0].tensor_dims.height * output_tensor_list_[0].tensor_dims.channel);
-    const float* val_float = output_tensor_list_[0].GetDataAsFloat();
+    output_score_list.resize(output_tensor_info_list_[0].tensor_dims.width * output_tensor_info_list_[0].tensor_dims.height * output_tensor_info_list_[0].tensor_dims.channel);
+    const float* val_float = output_tensor_info_list_[0].GetDataAsFloat();
     for (int32_t i = 0; i < (int32_t)output_score_list.size(); i++) {
         output_score_list[i] = val_float[i];
     }
