@@ -44,55 +44,75 @@ limitations under the License.
 #define INPUT_NAME  "data"
 #define OUTPUT_NAME "mobilenetv20_output_flatten0_reshape0"
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define IS_NCHW     true
+#define INPUT_DIMS  { 1, 3, 224, 224 }
 #elif defined(INFERENCE_HELPER_ENABLE_TFLITE) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_XNNPACK) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_GPU) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_NNAPI)
 #if 1
 #define MODEL_NAME  "mobilenet_v2_1.0_224.tflite"
 #define INPUT_NAME  "input"
 #define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define IS_NCHW     false
+#define INPUT_DIMS  { 1, 224, 224, 3 }
 #else
 #define MODEL_NAME  "mobilenet_v2_1.0_224_quant.tflite"
 #define INPUT_NAME  "input"
 #define OUTPUT_NAME "output"
 #define TENSORTYPE  TensorInfo::kTensorTypeUint8
+#define IS_NCHW     false
+#define INPUT_DIMS  { 1, 224, 224, 3 }
 #endif
 #elif defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_EDGETPU)
 #define MODEL_NAME  "mobilenet_v2_1.0_224_quant_edgetpu.tflite"
 #define INPUT_NAME  "input"
 #define OUTPUT_NAME "output"
 #define TENSORTYPE  TensorInfo::kTensorTypeUint8
+#define IS_NCHW     false
+#define INPUT_DIMS  { 1, 224, 224, 3 }
 #elif defined(INFERENCE_HELPER_ENABLE_TENSORRT)
 #define MODEL_NAME  "mobilenet_v2_1.0_224.onnx"
 //#define MODEL_NAME   "mobilenet_v2_1.0_224.trt"
 #define INPUT_NAME  "input"
 #define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define IS_NCHW     true
+#define INPUT_DIMS  { 1, 3, 224, 224 }
 #elif defined(INFERENCE_HELPER_ENABLE_NCNN)
 #define MODEL_NAME  "mobilenet_v2_1.0_224.param"
 #define INPUT_NAME  "input"
 #define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define IS_NCHW     true
+#define INPUT_DIMS  { 1, 3, 224, 224 }
 #elif defined(INFERENCE_HELPER_ENABLE_MNN)
 #define MODEL_NAME  "mobilenet_v2_1.0_224.mnn"
 #define INPUT_NAME  "input"
 #define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define IS_NCHW     true
+#define INPUT_DIMS  { 1, 3, 224, 224 }
 #elif defined(INFERENCE_HELPER_ENABLE_SNPE)
 #define MODEL_NAME  "mobilenet_v2_1.0_224.dlc"
 #define INPUT_NAME  "input:0"
 #define OUTPUT_NAME "MobilenetV2/Predictions/Softmax:0"
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define IS_NCHW     false
+#define INPUT_DIMS  { 1, 224, 224, 3 }
 #elif defined(INFERENCE_HELPER_ENABLE_ARMNN)
 #if 1
 #define MODEL_NAME  "mobilenet_v2_1.0_224.tflite"
 #define INPUT_NAME  "input"
 #define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define IS_NCHW     false
+#define INPUT_DIMS  { 1, 224, 224, 3 }
 #else
 #define MODEL_NAME  "mobilenetv2-1.0.onnx"
 #define INPUT_NAME  "data"
 #define OUTPUT_NAME "mobilenetv20_output_flatten0_reshape0"
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define IS_NCHW     true
+#define INPUT_DIMS  { 1, 3, 224, 224 }
 #endif
 #else
 #define MODEL_NAME  "error"
@@ -110,8 +130,8 @@ int32_t ClassificationEngine::Initialize(const std::string& work_dir, const int3
 
     /* Set input tensor info */
     input_tensor_info_list_.clear();
-    InputTensorInfo input_tensor_info(INPUT_NAME, TENSORTYPE);
-    input_tensor_info.tensor_dims = { 1, 224, 224, 3 };
+    InputTensorInfo input_tensor_info(INPUT_NAME, TENSORTYPE, IS_NCHW);
+    input_tensor_info.tensor_dims = INPUT_DIMS;
     input_tensor_info.data_type = InputTensorInfo::kDataTypeImage;
     input_tensor_info.normalize.mean[0] = 0.485f;   /* https://github.com/onnx/models/tree/master/vision/classification/mobilenet#preprocessing */
     input_tensor_info.normalize.mean[1] = 0.456f;
@@ -163,14 +183,6 @@ int32_t ClassificationEngine::Initialize(const std::string& work_dir, const int3
         return kRetErr;
     }
 
-    /* Check if input tensor info is set */
-    for (const auto& input_tensor_info : input_tensor_info_list_) {
-        if ((input_tensor_info.tensor_dims.width <= 0) || (input_tensor_info.tensor_dims.height <= 0) || input_tensor_info.tensor_type == TensorInfo::kTensorTypeNone) {
-            PRINT_E("Invalid tensor size\n");
-            inference_helper_.reset();
-            return kRetErr;
-        }
-    }
 
     /* read label */
 #if defined(INFERENCE_HELPER_ENABLE_OPENCV)
@@ -209,7 +221,7 @@ int32_t ClassificationEngine::Process(const cv::Mat& original_mat, RESULT& resul
     /** Use image data as input **/
     /* do resize and color conversion here because some inference engine doesn't support these operations */
     cv::Mat img_src;
-    cv::resize(original_mat, img_src, cv::Size(input_tensor_info.tensor_dims.width, input_tensor_info.tensor_dims.height));
+    cv::resize(original_mat, img_src, cv::Size(input_tensor_info.GetWidth(), input_tensor_info.GetHeight()));
 #ifndef CV_COLOR_IS_RGB
     cv::cvtColor(img_src, img_src, cv::COLOR_BGR2RGB);
 #endif
@@ -269,7 +281,7 @@ int32_t ClassificationEngine::Process(const cv::Mat& original_mat, RESULT& resul
     const auto& t_post_process0 = std::chrono::steady_clock::now();
     /* Retrieve the result */
     std::vector<float> output_score_list;
-    output_score_list.resize(output_tensor_info_list_[0].tensor_dims.width * output_tensor_info_list_[0].tensor_dims.height * output_tensor_info_list_[0].tensor_dims.channel);
+    output_score_list.resize(output_tensor_info_list_[0].GetElementNum());
     const float* val_float = output_tensor_info_list_[0].GetDataAsFloat();
     for (int32_t i = 0; i < (int32_t)output_score_list.size(); i++) {
         output_score_list[i] = val_float[i];
