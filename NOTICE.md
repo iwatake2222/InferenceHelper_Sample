@@ -1,5 +1,11 @@
 This project utilizes the following OSS (Open Source Software):
 
+- stb
+   - https://github.com/nothings/stb
+   - Copyright (c) 2017 Sean Barrett
+   - Licensed under MIT License
+   - Modification: no
+
 - tensorflow
    - https://github.com/tensorflow/tensorflow
    - Copyright 2019 The TensorFlow Authors
