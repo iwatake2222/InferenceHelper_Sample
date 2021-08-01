@@ -207,7 +207,7 @@ int32_t ClassificationEngine::Finalize()
 }
 
 
-int32_t ClassificationEngine::Process(const cv::Mat& original_mat, RESULT& result)
+int32_t ClassificationEngine::Process(const cv::Mat& original_mat, Result& result)
 {
     if (!inference_helper_) {
         PRINT_E("Inference helper is not created\n");

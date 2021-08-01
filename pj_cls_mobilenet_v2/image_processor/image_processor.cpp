@@ -107,17 +107,17 @@ int32_t ImageProcessor::Process(cv::Mat* mat, ImageProcessor::OutputParam* outpu
         return -1;
     }
 
-    cv::Mat& originalMat = *mat;
-    ClassificationEngine::RESULT result;
-    if (s_classification_engine->Process(originalMat, result) != ClassificationEngine::kRetOk) {
+    cv::Mat& original_mat = *mat;
+    ClassificationEngine::Result result;
+    if (s_classification_engine->Process(original_mat, result) != ClassificationEngine::kRetOk) {
         return -1;
     }
 
     /* Draw the result */
     std::string result_str;
     result_str = "Result:" + result.class_name + " (score = " + std::to_string(result.score) + ")";
-    cv::putText(originalMat, result_str, cv::Point(10, 10), cv::FONT_HERSHEY_PLAIN, 1, CreateCvColor(0, 0, 0), 3);
-    cv::putText(originalMat, result_str, cv::Point(10, 10), cv::FONT_HERSHEY_PLAIN, 1, CreateCvColor(0, 255, 0), 1);
+    cv::putText(original_mat, result_str, cv::Point(10, 10), cv::FONT_HERSHEY_PLAIN, 1, CreateCvColor(0, 0, 0), 3);
+    cv::putText(original_mat, result_str, cv::Point(10, 10), cv::FONT_HERSHEY_PLAIN, 1, CreateCvColor(0, 255, 0), 1);
 
     /* Return the results */
     output_param->class_id = result.class_id;
