@@ -70,6 +70,7 @@ limitations under the License.
 #define IS_NCHW     false
 #define INPUT_DIMS  { 1, 224, 224, 3 }
 #elif defined(INFERENCE_HELPER_ENABLE_TENSORRT)
+#include "inference_helper_tensorrt.h"
 #define MODEL_NAME  "mobilenet_v2_1.0_224.onnx"
 //#define MODEL_NAME   "mobilenet_v2_1.0_224.trt"
 #define INPUT_NAME  "input"
@@ -160,6 +161,12 @@ int32_t ClassificationEngine::Initialize(const std::string& work_dir, const int3
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kTensorflowLiteNnapi));
 #elif defined(INFERENCE_HELPER_ENABLE_TENSORRT)
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kTensorrt));
+    if (inference_helper_) {
+        InferenceHelperTensorRt* p = dynamic_cast<InferenceHelperTensorRt*>(inference_helper_.get());
+        if (p) {
+            p->SetDlaCore(-1);  /* Use GPU */
+        }
+    }
 #elif defined(INFERENCE_HELPER_ENABLE_NCNN)
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kNcnn));
 #elif defined(INFERENCE_HELPER_ENABLE_MNN)
