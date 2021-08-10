@@ -5,7 +5,7 @@ set(ProjectName "main")
 project(${ProjectName})
 
 # Select build system and set compile options
-include(${CMAKE_CURRENT_LIST_DIR}/../InferenceHelper/common_helper/cmakes/build_setting.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../common_helper/cmakes/build_setting.cmake)
 
 # Create executable file
 add_executable(${ProjectName} main.cpp)
@@ -13,14 +13,14 @@ add_executable(${ProjectName} main.cpp)
 # Use stb
 target_include_directories(${ProjectName} PUBLIC ${CMAKE_CURRENT_LIST_DIR}/third_party/stb)
 
-# For InferenceHelper
-set(INFERENCE_HELPER_DIR ${CMAKE_CURRENT_LIST_DIR}/../InferenceHelper/)
 # Link Common Helper module
-# add_subdirectory(${INFERENCE_HELPER_DIR}/common_helper common_helper)
-target_include_directories(${ProjectName} PUBLIC ${INFERENCE_HELPER_DIR}/common_helper)
+set(COMMON_HELPER_WITH_OPENCV off CACHE BOOL "With OpenCV? [on/off]")
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../common_helper common_helper)
+target_include_directories(${ProjectName} PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../common_helper)
 target_link_libraries(${ProjectName} CommonHelper)
 
-# Link InferenceHelper module
+# For InferenceHelper
+set(INFERENCE_HELPER_DIR ${CMAKE_CURRENT_LIST_DIR}/../InferenceHelper/)
 add_subdirectory(${INFERENCE_HELPER_DIR}/inference_helper inference_helper)
 target_include_directories(${ProjectName} PUBLIC ${INFERENCE_HELPER_DIR}/inference_helper)
 target_link_libraries(${ProjectName} InferenceHelper)

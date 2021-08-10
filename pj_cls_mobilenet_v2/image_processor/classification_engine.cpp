@@ -30,6 +30,7 @@ limitations under the License.
 
 /* for My modules */
 #include "common_helper.h"
+#include "common_helper_cv.h"
 #include "inference_helper.h"
 #include "classification_engine.h"
 
@@ -40,80 +41,90 @@ limitations under the License.
 
 /* Model parameters */
 #if defined(INFERENCE_HELPER_ENABLE_OPENCV)
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define MODEL_NAME  "mobilenetv2-1.0.onnx"
 #define INPUT_NAME  "data"
-#define OUTPUT_NAME "mobilenetv20_output_flatten0_reshape0"
-#define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define IS_NCHW     true
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define IS_NCHW     true
+#define IS_RGB      true
+#define OUTPUT_NAME "mobilenetv20_output_flatten0_reshape0"
 #elif defined(INFERENCE_HELPER_ENABLE_TFLITE) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_XNNPACK) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_GPU) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_NNAPI)
 #if 1
 #define MODEL_NAME  "mobilenet_v2_1.0_224.tflite"
-#define INPUT_NAME  "input"
-#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define IS_NCHW     false
+#define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 224, 224, 3 }
+#define IS_NCHW     false
+#define IS_RGB      true
+#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #else
 #define MODEL_NAME  "mobilenet_v2_1.0_224_quant.tflite"
-#define INPUT_NAME  "input"
-#define OUTPUT_NAME "output"
 #define TENSORTYPE  TensorInfo::kTensorTypeUint8
-#define IS_NCHW     false
+#define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 224, 224, 3 }
+#define IS_NCHW     false
+#define IS_RGB      true
+#define OUTPUT_NAME "output"
 #endif
 #elif defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_EDGETPU)
 #define MODEL_NAME  "mobilenet_v2_1.0_224_quant_edgetpu.tflite"
-#define INPUT_NAME  "input"
-#define OUTPUT_NAME "output"
 #define TENSORTYPE  TensorInfo::kTensorTypeUint8
-#define IS_NCHW     false
+#define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 224, 224, 3 }
+#define IS_NCHW     false
+#define IS_RGB      true
+#define OUTPUT_NAME "output"
 #elif defined(INFERENCE_HELPER_ENABLE_TENSORRT)
 #include "inference_helper_tensorrt.h"
 #define MODEL_NAME  "mobilenet_v2_1.0_224.onnx"
 //#define MODEL_NAME   "mobilenet_v2_1.0_224.trt"
-#define INPUT_NAME  "input"
-#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define IS_NCHW     true
+#define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define IS_NCHW     true
+#define IS_RGB      true
+#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #elif defined(INFERENCE_HELPER_ENABLE_NCNN)
 #define MODEL_NAME  "mobilenet_v2_1.0_224.param"
-#define INPUT_NAME  "input"
-#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define IS_NCHW     true
+#define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define IS_NCHW     true
+#define IS_RGB      true
+#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #elif defined(INFERENCE_HELPER_ENABLE_MNN)
 #define MODEL_NAME  "mobilenet_v2_1.0_224.mnn"
-#define INPUT_NAME  "input"
-#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define IS_NCHW     true
+#define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define IS_NCHW     true
+#define IS_RGB      true
+#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #elif defined(INFERENCE_HELPER_ENABLE_SNPE)
 #define MODEL_NAME  "mobilenet_v2_1.0_224.dlc"
-#define INPUT_NAME  "input:0"
-#define OUTPUT_NAME "MobilenetV2/Predictions/Softmax:0"
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define IS_NCHW     false
+#define INPUT_NAME  "input:0"
 #define INPUT_DIMS  { 1, 224, 224, 3 }
+#define IS_NCHW     false
+#define IS_RGB      true
+#define OUTPUT_NAME "MobilenetV2/Predictions/Softmax:0"
 #elif defined(INFERENCE_HELPER_ENABLE_ARMNN)
 #if 1
 #define MODEL_NAME  "mobilenet_v2_1.0_224.tflite"
-#define INPUT_NAME  "input"
-#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define IS_NCHW     false
+#define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 224, 224, 3 }
+#define IS_NCHW     false
+#define IS_RGB      true
+#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #else
 #define MODEL_NAME  "mobilenetv2-1.0.onnx"
-#define INPUT_NAME  "data"
-#define OUTPUT_NAME "mobilenetv20_output_flatten0_reshape0"
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define IS_NCHW     true
+#define INPUT_NAME  "data"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define IS_NCHW     true
+#define IS_RGB      true
+#define OUTPUT_NAME "mobilenetv20_output_flatten0_reshape0"
 #endif
 #else
 #define MODEL_NAME  "error"
@@ -227,11 +238,15 @@ int32_t ClassificationEngine::Process(const cv::Mat& original_mat, Result& resul
 #if 1
     /** Use image data as input **/
     /* do resize and color conversion here because some inference engine doesn't support these operations */
-    cv::Mat img_src;
-    cv::resize(original_mat, img_src, cv::Size(input_tensor_info.GetWidth(), input_tensor_info.GetHeight()));
-#ifndef CV_COLOR_IS_RGB
-    cv::cvtColor(img_src, img_src, cv::COLOR_BGR2RGB);
-#endif
+    int32_t crop_x = 0;
+    int32_t crop_y = 0;
+    int32_t crop_w = original_mat.cols;
+    int32_t crop_h = original_mat.rows;
+    cv::Mat img_src = cv::Mat::zeros(input_tensor_info.GetHeight(), input_tensor_info.GetWidth(), CV_8UC3);
+    //CommonHelper::CropResizeCvt(original_mat, img_src, crop_x, crop_y, crop_w, crop_h, IS_RGB, CommonHelper::kCropTypeStretch);
+    //CommonHelper::CropResizeCvt(original_mat, img_src, crop_x, crop_y, crop_w, crop_h, IS_RGB, CommonHelper::kCropTypeCut);
+    CommonHelper::CropResizeCvt(original_mat, img_src, crop_x, crop_y, crop_w, crop_h, IS_RGB, CommonHelper::kCropTypeExpand);
+
     input_tensor_info.data = img_src.data;
     input_tensor_info.data_type = InputTensorInfo::kDataTypeImage;
     input_tensor_info.image_info.width = img_src.cols;
