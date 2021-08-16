@@ -32,7 +32,7 @@
     git clone https://github.com/iwatake2222/InferenceHelper_Sample
     cd InferenceHelper_Sample
 
-    git submodule update --init --recursive
+    git submodule update --init --recursive --recommend-shallow --depth 1
     cd InferenceHelper/third_party/tensorflow
     chmod +x tensorflow/lite/tools/make/download_dependencies.sh
     tensorflow/lite/tools/make/download_dependencies.sh
