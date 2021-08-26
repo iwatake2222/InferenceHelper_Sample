@@ -126,6 +126,14 @@ limitations under the License.
 #define IS_RGB      true
 #define OUTPUT_NAME "mobilenetv20_output_flatten0_reshape0"
 #endif
+#elif defined(INFERENCE_HELPER_ENABLE_NNABLA)
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define MODEL_NAME  "mobilenet_v2_1.0_224.nnp"
+#define INPUT_NAME  "input"
+#define INPUT_DIMS  { 1, 3, 224, 224 }
+#define IS_NCHW     true
+#define IS_RGB      true
+#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #else
 #define MODEL_NAME  "error"
 #endif
@@ -186,6 +194,8 @@ int32_t ClassificationEngine::Initialize(const std::string& work_dir, const int3
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kSnpe));
 #elif defined(INFERENCE_HELPER_ENABLE_ARMNN)
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kArmnn));
+#elif defined(INFERENCE_HELPER_ENABLE_NNABLA)
+    inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kNnabla));
 #else
     PRINT_E("Inference Helper type is not selected\n");
 #endif
@@ -302,12 +312,7 @@ int32_t ClassificationEngine::Process(const cv::Mat& original_mat, Result& resul
     /*** PostProcess ***/
     const auto& t_post_process0 = std::chrono::steady_clock::now();
     /* Retrieve the result */
-    std::vector<float> output_score_list;
-    output_score_list.resize(output_tensor_info_list_[0].GetElementNum());
-    const float* val_float = output_tensor_info_list_[0].GetDataAsFloat();
-    for (int32_t i = 0; i < (int32_t)output_score_list.size(); i++) {
-        output_score_list[i] = val_float[i];
-    }
+    std::vector<float> output_score_list(output_tensor_info_list_[0].GetDataAsFloat(), output_tensor_info_list_[0].GetDataAsFloat() + output_tensor_info_list_[0].GetElementNum());
 
     /* Find the max score */
     int32_t max_index = (int32_t)(std::max_element(output_score_list.begin(), output_score_list.end()) - output_score_list.begin());
