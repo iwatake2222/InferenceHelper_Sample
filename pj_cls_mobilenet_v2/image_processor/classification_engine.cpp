@@ -126,7 +126,7 @@ limitations under the License.
 #define IS_RGB      true
 #define OUTPUT_NAME "mobilenetv20_output_flatten0_reshape0"
 #endif
-#elif defined(INFERENCE_HELPER_ENABLE_NNABLA)
+#elif defined(INFERENCE_HELPER_ENABLE_NNABLA) || defined(INFERENCE_HELPER_ENABLE_NNABLA_CUDA)
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define MODEL_NAME  "mobilenet_v2_1.0_224.nnp"
 #define INPUT_NAME  "input"
@@ -196,6 +196,8 @@ int32_t ClassificationEngine::Initialize(const std::string& work_dir, const int3
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kArmnn));
 #elif defined(INFERENCE_HELPER_ENABLE_NNABLA)
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kNnabla));
+#elif defined(INFERENCE_HELPER_ENABLE_NNABLA_CUDA)
+    inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kNnablaCuda));
 #else
     PRINT_E("Inference Helper type is not selected\n");
 #endif
@@ -266,7 +268,7 @@ int32_t ClassificationEngine::Process(const cv::Mat& original_mat, Result& resul
     input_tensor_info.image_info.crop_y = 0;
     input_tensor_info.image_info.crop_width = img_src.cols;
     input_tensor_info.image_info.crop_height = img_src.rows;
-    input_tensor_info.image_info.is_bgr = false;
+    input_tensor_info.image_info.is_bgr = IS_RGB;
     input_tensor_info.image_info.swap_color = false;
 #else
     /** Use blob data as input (img->blob conversion is done by InferenceHelper::PreProcessByOpenCV)**/
@@ -281,10 +283,10 @@ int32_t ClassificationEngine::Process(const cv::Mat& original_mat, Result& resul
     input_tensor_info.image_info.crop_width = original_mat.cols;
     input_tensor_info.image_info.crop_height = original_mat.rows;
 #ifdef CV_COLOR_IS_RGB
-    input_tensor_info.image_info.is_bgr = false;
+    input_tensor_info.image_info.is_bgr = IS_RGB;
     input_tensor_info.image_info.swap_color = false;
 #else
-    input_tensor_info.image_info.is_bgr = true;
+    input_tensor_info.image_info.is_bgr = IS_RGB;
     input_tensor_info.image_info.swap_color = true;
 #endif
 #if 0

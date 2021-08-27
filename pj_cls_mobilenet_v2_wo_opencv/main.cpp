@@ -47,7 +47,8 @@ int32_t main()
 {
     /* Load and resize image */
     std::unique_ptr<uint8_t[]> img_src;
-    std::unique_ptr<uint8_t[]> img_resized = std::make_unique<uint8_t[]>(224 * 224 * 3);
+    // std::unique_ptr<uint8_t[]> img_resized = std::make_unique<uint8_t[]>(224 * 224 * 3);
+    std::unique_ptr<uint8_t[]> img_resized(new uint8_t[224 * 224 * 3]);
     int32_t w, h, c;
     img_src.reset(stbi_load(IMAGE_NAME, &w, &h, &c, 0));
     stbir_resize_uint8(img_src.get(), w, h, 0, img_resized.get(), 224, 224, 0, c);
@@ -145,6 +146,14 @@ static constexpr int32_t kRetErr = -1;
 #define IS_NCHW     true
 #define INPUT_DIMS  { 1, 3, 224, 224 }
 #endif
+#elif defined(INFERENCE_HELPER_ENABLE_NNABLA) || defined(INFERENCE_HELPER_ENABLE_NNABLA_CUDA)
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define MODEL_NAME  "mobilenet_v2_1.0_224.nnp"
+#define INPUT_NAME  "input"
+#define INPUT_DIMS  { 1, 3, 224, 224 }
+#define IS_NCHW     true
+#define IS_RGB      true
+#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #else
 #define MODEL_NAME  "error"
 #endif
@@ -231,6 +240,10 @@ static int32_t DL_Initialize(const std::string& work_dir, const int32_t num_thre
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kSnpe));
 #elif defined(INFERENCE_HELPER_ENABLE_ARMNN)
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kArmnn));
+#elif defined(INFERENCE_HELPER_ENABLE_NNABLA)
+    inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kNnabla));
+#elif defined(INFERENCE_HELPER_ENABLE_NNABLA_CUDA)
+    inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kNnablaCuda));
 #else
     PRINT_E("Inference Helper type is not selected\n");
 #endif
