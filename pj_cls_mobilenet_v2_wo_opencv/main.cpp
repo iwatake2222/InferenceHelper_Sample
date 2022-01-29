@@ -78,6 +78,7 @@ static constexpr int32_t kRetErr = -1;
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     true
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define HAS_BACKGOUND false
 #elif defined(INFERENCE_HELPER_ENABLE_TFLITE) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_XNNPACK) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_GPU) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_NNAPI)
 #if 1
 #define MODEL_NAME  "mobilenet_v2_1.0_224.tflite"
@@ -86,6 +87,7 @@ static constexpr int32_t kRetErr = -1;
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     false
 #define INPUT_DIMS  { 1, 224, 224, 3 }
+#define HAS_BACKGOUND true
 #else
 #define MODEL_NAME  "mobilenet_v2_1.0_224_quant.tflite"
 #define INPUT_NAME  "input"
@@ -93,6 +95,7 @@ static constexpr int32_t kRetErr = -1;
 #define TENSORTYPE  TensorInfo::kTensorTypeUint8
 #define IS_NCHW     false
 #define INPUT_DIMS  { 1, 224, 224, 3 }
+#define HAS_BACKGOUND true
 #endif
 #elif defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_EDGETPU)
 #define MODEL_NAME  "mobilenet_v2_1.0_224_quant_edgetpu.tflite"
@@ -101,6 +104,7 @@ static constexpr int32_t kRetErr = -1;
 #define TENSORTYPE  TensorInfo::kTensorTypeUint8
 #define IS_NCHW     false
 #define INPUT_DIMS  { 1, 224, 224, 3 }
+#define HAS_BACKGOUND true
 #elif defined(INFERENCE_HELPER_ENABLE_TENSORRT)
 #define MODEL_NAME  "mobilenet_v2_1.0_224.onnx"
 //#define MODEL_NAME   "mobilenet_v2_1.0_224.trt"
@@ -109,6 +113,7 @@ static constexpr int32_t kRetErr = -1;
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     true
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define HAS_BACKGOUND true
 #elif defined(INFERENCE_HELPER_ENABLE_NCNN)
 #define MODEL_NAME  "mobilenet_v2_1.0_224.param"
 #define INPUT_NAME  "input"
@@ -116,6 +121,7 @@ static constexpr int32_t kRetErr = -1;
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     true
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define HAS_BACKGOUND true
 #elif defined(INFERENCE_HELPER_ENABLE_MNN)
 #define MODEL_NAME  "mobilenet_v2_1.0_224.mnn"
 #define INPUT_NAME  "input"
@@ -123,6 +129,7 @@ static constexpr int32_t kRetErr = -1;
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     true
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define HAS_BACKGOUND true
 #elif defined(INFERENCE_HELPER_ENABLE_SNPE)
 #define MODEL_NAME  "mobilenet_v2_1.0_224.dlc"
 #define INPUT_NAME  "input:0"
@@ -130,6 +137,7 @@ static constexpr int32_t kRetErr = -1;
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     false
 #define INPUT_DIMS  { 1, 224, 224, 3 }
+#define HAS_BACKGOUND true
 #elif defined(INFERENCE_HELPER_ENABLE_ARMNN)
 #if 1
 #define MODEL_NAME  "mobilenet_v2_1.0_224.tflite"
@@ -145,6 +153,7 @@ static constexpr int32_t kRetErr = -1;
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     true
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define HAS_BACKGOUND false
 #endif
 #elif defined(INFERENCE_HELPER_ENABLE_NNABLA) || defined(INFERENCE_HELPER_ENABLE_NNABLA_CUDA)
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
@@ -152,8 +161,8 @@ static constexpr int32_t kRetErr = -1;
 #define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
 #define IS_NCHW     true
-#define IS_RGB      true
 #define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
+#define HAS_BACKGOUND true
 #else
 #define MODEL_NAME  "error"
 #endif
@@ -174,7 +183,7 @@ static int32_t DL_ReadLabel(const std::string& filename, std::vector<std::string
         return kRetErr;
     }
     label_list.clear();
-    if (true) {
+    if (HAS_BACKGOUND) {
         label_list.push_back("background");
     }
     std::string str;
@@ -261,9 +270,6 @@ static int32_t DL_Initialize(const std::string& work_dir, const int32_t num_thre
 
 
     /* read label */
-#if defined(INFERENCE_HELPER_ENABLE_OPENCV)
-    with_background = false;
-#endif
     if (DL_ReadLabel(label_filename, label_list_) != kRetOk) {
         return kRetErr;
     }

@@ -149,6 +149,13 @@ cp libedgetpu.so.1.0 libedgetpu.so.1
 sudo LD_LIBRARY_PATH=./ ./main
 ```
 
+### Note: ncnn
+- Build for Android
+    - In case you encounter `error: use of typeid requires -frtti` error, modify `ViewAndroid\sdk\native\jni\include\opencv2\opencv_modules.hpp`
+        - `//#define HAVE_OPENCV_FLANN`
+- Please read https://github.com/iwatake2222/InferenceHelper , as well.
+
+
 # License
 - InferenceHelper_Sample
 - https://github.com/iwatake2222/InferenceHelper_Sample
