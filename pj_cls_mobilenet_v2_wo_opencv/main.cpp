@@ -146,6 +146,7 @@ static constexpr int32_t kRetErr = -1;
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     false
 #define INPUT_DIMS  { 1, 224, 224, 3 }
+#define HAS_BACKGOUND true
 #else
 #define MODEL_NAME  "mobilenetv2-1.0.onnx"
 #define INPUT_NAME  "data"

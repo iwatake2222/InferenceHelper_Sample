@@ -25,6 +25,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(MSVC)
     add_compile_options(/wd4819)	# ignore character code warning
+    # You need to enable the following option to Debug the project in Visual Studio when using DLL like ncnn, MNN, etc.
+    # set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MD")
 else()
     set(CMAKE_C_FLAGS "-Wall")
     set(CMAKE_C_FLAGS_RELEASE "-O2 -DNDEBUG")
