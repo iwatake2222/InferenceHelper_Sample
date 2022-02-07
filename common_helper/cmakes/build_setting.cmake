@@ -29,6 +29,7 @@ if(MSVC)
     # set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MD")
 else()
     set(CMAKE_C_FLAGS "-Wall")
+    set(CMAKE_C_FLAGS "-Wall -Wl,'--no-as-needed'")    # to make sure to link libMNN_Vulkan.so
     set(CMAKE_C_FLAGS_RELEASE "-O2 -DNDEBUG")
     set(CMAKE_C_FLAGS_DEBUG "-g3 -O0")
     set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS}")
