@@ -36,7 +36,7 @@ limitations under the License.
 /*** Macro ***/
 #define IMAGE_NAME   RESOURCE_DIR"/parrot.jpg"
 #define WORK_DIR     RESOURCE_DIR
-#define LOOP_NUM_FOR_TIME_MEASUREMENT 100
+#define LOOP_NUM_FOR_TIME_MEASUREMENT 20
 
 
 /*** Function ***/
@@ -343,7 +343,7 @@ static int32_t DL_Process(uint8_t* resized_img)
     std::ofstream os("time_inference.txt", std::ios::out);
     os << time_inference << " [ms]" << std::endl;
     os.close();
-    printf("Inference Time = %lf [ms]", time_inference);
+    printf("Inference Time = %lf [ms]\n", time_inference);
 
     const int32_t kTrueAnswer = HAS_BACKGOUND ? 89 : 88;
     if (max_index == kTrueAnswer) {

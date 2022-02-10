@@ -2,6 +2,9 @@
 - Sample project for Inference Helper (https://github.com/iwatake2222/InferenceHelper )
 - Run a simple classification model (MobileNetv2) using several deep leraning frameworks
 
+[![CI Windows](https://github.com/iwatake2222/InferenceHelper_Sample/actions/workflows/ci_windows.yml/badge.svg)](https://github.com/iwatake2222/InferenceHelper_Sample/actions/workflows/ci_windows.yml)
+[![CI Ubuntu](https://github.com/iwatake2222/InferenceHelper_Sample/actions/workflows/ci_ubuntu.yml/badge.svg)](https://github.com/iwatake2222/InferenceHelper_Sample/actions/workflows/ci_ubuntu.yml)
+
 ![Class Diagram](00_doc/class_diagram.png) 
 
 ## Usage
