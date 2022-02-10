@@ -7,15 +7,15 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
     strategy:
       matrix:
         include:
           - arch: armv7
-            distro: ubuntu20.04
+            distro: ubuntu18.04
             artifact_name: time_inference_armv7.txt
           - arch: aarch64
-            distro: ubuntu20.04
+            distro: ubuntu18.04
             artifact_name: time_inference_aarch64.txt
 
     steps:
