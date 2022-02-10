@@ -1,0 +1,38 @@
+name: Test Windows
+
+on:
+  push:
+    tags: '*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-2019
+
+    steps:
+    - name: Get source code
+      run: |
+        git clone https://github.com/iwatake2222/InferenceHelper_Sample
+        cd InferenceHelper_Sample
+        git submodule update --init
+        sh InferenceHelper/third_party/download_prebuilt_libraries.sh
+        sh ./download_resource.sh
+        cd ..
+
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1.1
+      with:
+        vs-version: '[16.0,16.20)'  # Make sure to use Visual Studio 2019
+
+    - name: Build and Test
+      run: |
+        cd InferenceHelper_Sample
+        ./test_script/build_run_windows.ps1 MNN
+        cd ..
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: time_inference_MNN_windows.txt
+        path: ./InferenceHelper_Sample/build/time_inference.txt
+

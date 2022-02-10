@@ -36,6 +36,7 @@ limitations under the License.
 /*** Macro ***/
 #define IMAGE_NAME   RESOURCE_DIR"/parrot.jpg"
 #define WORK_DIR     RESOURCE_DIR
+#define LOOP_NUM_FOR_TIME_MEASUREMENT 100
 
 
 /*** Function ***/
@@ -55,9 +56,15 @@ int32_t main()
     stbi_write_jpg("img_reszed.jpg", 224, 224, c, img_resized.get(), 95);
 
 
-    (void)DL_Initialize(WORK_DIR, 4);
-    (void)DL_Process(img_resized.get());
-    (void)DL_Finalize();
+    if (DL_Initialize(WORK_DIR, 4) != 0) {
+        return -1;
+    }
+    if (DL_Process(img_resized.get()) != 0) {
+        return -1;
+    }
+    if (DL_Finalize() != 0) {
+        return -1;
+    }
 
     return 0;
 }
@@ -324,6 +331,24 @@ static int32_t DL_Process(uint8_t* resized_img)
     auto max_score = *std::max_element(output_score_list.begin(), output_score_list.end());
     printf("Result = %s (%d) (%.3f)\n", label_list_[max_index].c_str(), max_index, max_score);
 
-    return kRetOk;
+
+    /*** Measure Inference time ***/
+    const auto& time_inference_0 = std::chrono::steady_clock::now();
+    for (int32_t i = 0; i < LOOP_NUM_FOR_TIME_MEASUREMENT; i++) {
+        inference_helper_->Process(output_tensor_info_list_);
+    }
+    const auto& time_inference_1 = std::chrono::steady_clock::now();
+    double time_inference = (time_inference_1 - time_inference_0).count() / 1000000.0;
+    time_inference /= LOOP_NUM_FOR_TIME_MEASUREMENT;
+    std::ofstream os("time_inference.txt", std::ios::out);
+    os << time_inference << " [ms]" << std::endl;
+    os.close();
+
+    const int32_t kTrueAnswer = HAS_BACKGOUND ? 89 : 88;
+    if (max_index == kTrueAnswer) {
+        return kRetOk;
+    } else {
+        return kRetErr;
+    }
 }
 
