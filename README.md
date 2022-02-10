@@ -1,5 +1,5 @@
 # InferenceHelper_Sample
-- Sample project for InferenceHelper (https://github.com/iwatake2222/InferenceHelper )
+- Sample project for Inference Helper (https://github.com/iwatake2222/InferenceHelper )
 - Run a simple classification model (MobileNetv2) using several deep leraning frameworks
 
 ![Class Diagram](00_doc/class_diagram.png) 
@@ -22,7 +22,7 @@
     - e.g. ./main 0
 ```
 
-## How to build sample application
+## How to build a sample project
 ### Requirements
 - OpenCV 4.x
 
@@ -31,38 +31,28 @@
     ```sh
     git clone https://github.com/iwatake2222/InferenceHelper_Sample
     cd InferenceHelper_Sample
-
-    git submodule update --init --recursive --recommend-shallow --depth 1
-    cd InferenceHelper/third_party/tensorflow
-    chmod +x tensorflow/lite/tools/make/download_dependencies.sh
-    tensorflow/lite/tools/make/download_dependencies.sh
+    git submodule update --init
+    sh InferenceHelper/third_party/download_prebuilt_libraries.sh
+    ```
+    - If you have a problem, please refer to  https://github.com/iwatake2222/InferenceHelper#installation
+- Download models
+    - If your host PC is Windows but you want to build/run on Linux, it's better to run this script on the target device(Linux). Otherwise, symbolic link will broken.
+    ```sh
+    sh ./download_resource.sh
     ```
 
-- Download prebuilt libraries
-    - Download prebuilt libraries (ThirdParty.zip) from https://github.com/iwatake2222/InferenceHelper/releases/ 
-    - Extract it to `InferenceHelper/third_party/`
-- Download SNPE library
-    - https://developer.qualcomm.com/software/qualcomm-neural-processing-sdk/tools
-    - Extract `snpe-1.51.0.zip` , then place `lib` and `include` folders to `InferenceHelper/third_party/snpe`
-- Download models
-    - Download models (resource.zip) from https://github.com/iwatake2222/InferenceHelper_Sample/releases/ 
-    - Extract it to `resource/`
-
 ### Windows (Visual Studio)
-- Configure and Generate a new project using cmake-gui for Visual Studio 2017 64-bit
+- Configure and Generate a new project using cmake-gui for Visual Studio 2019 64-bit
     - `Where is the source code` : path-to-InferenceHelper_Sample/pj_cls_mobilenet_v2
     - `Where to build the binaries` : path-to-build	(any)
     - Check one of the liseted InferenceHelperFramework (e.g. `INFERENCE_HELPER_ENABLE_MNN` )
 - Open `main.sln`
 - Set `main` project as a startup project, then build and run!
 
-**Note**
-When you use Tensorflow Lite in Visual Studio, use `Release` or `RelWithDebInfo` . If you use `Debug` , you will get exception error while running.
-
 ### Linux (PC Ubuntu, Raspberry Pi, Jetson Nano, etc.)
 ```sh
 cd pj_cls_mobilenet_v2
-mkdir build && cd build
+mkdir -p build && cd build
 cmake .. -DINFERENCE_HELPER_ENABLE_MNN=on
 make
 ./main
@@ -143,7 +133,9 @@ cmake .. \
 -DINFERENCE_HELPER_ENABLE_ARMNN=off
 ```
 
-### Additional commands for TensorFlow Lite + EdgeTPU
+### Note: TensorFlow Lite + EdgeTPU
+- You may need run the app using something like the following
+
 ```sh
 cp libedgetpu.so.1.0 libedgetpu.so.1
 sudo LD_LIBRARY_PATH=./ ./main
@@ -153,8 +145,6 @@ sudo LD_LIBRARY_PATH=./ ./main
 - Build for Android
     - In case you encounter `error: use of typeid requires -frtti` error, modify `ViewAndroid\sdk\native\jni\include\opencv2\opencv_modules.hpp`
         - `//#define HAVE_OPENCV_FLANN`
-- Please read https://github.com/iwatake2222/InferenceHelper , as well.
-
 
 # License
 - InferenceHelper_Sample
