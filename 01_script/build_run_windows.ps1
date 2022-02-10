@@ -6,9 +6,10 @@ Param(
     [string]$FRAMEWORK_NAME = "MNN",
     [switch]$BUILD_ONLY
 )
-echo "[iwatake] Build for: INFERENCE_HELPER_ENABLE_$FRAMEWORK_NAME"
+$LOG_HEADER = "[CI_WINDOWS_${FRAMEWORK_NAME}]"
+echo "${LOG_HEADER} Start"
 
-echo "[iwatake][$FRAMEWORK_NAME] Build Start"
+echo "${LOG_HEADER} Build Start"
 if(Test-Path build) {
     del -R build
 }
@@ -17,11 +18,11 @@ cd build
 cmake -DINFERENCE_HELPER_ENABLE_"$FRAMEWORK_NAME"=on ../pj_cls_mobilenet_v2_wo_opencv
 MSBuild -m:4 ./main.sln /p:Configuration=Release
 if(!($?)) {
-    echo "[iwatake][$FRAMEWORK_NAME] Build error"
+    echo "${LOG_HEADER} Build Error"
     cd ..
     exit -1
 }
-echo "[iwatake][$FRAMEWORK_NAME] Build End"
+echo "${LOG_HEADER} Build End"
 
 if($BUILD_ONLY) {
     cd ..
@@ -29,18 +30,19 @@ if($BUILD_ONLY) {
 }
 
 
-echo "[iwatake][$FRAMEWORK_NAME] Execution Start"
+echo "${LOG_HEADER} Run Start"
 ./Release/main.exe
 if(!($?)) {
-    echo "[iwatake][$FRAMEWORK_NAME] Execution error"
+    echo "${LOG_HEADER} Run Error"
     cd ..
     exit -1
 }
-echo "[iwatake][$FRAMEWORK_NAME] Execution End"
+echo "${LOG_HEADER} Run End"
 
-echo "[iwatake][$FRAMEWORK_NAME] OK"
 cd ..
 echo "$FRAMEWORK_NAME" >> time_inference_windows.txt
 cat build/time_inference.txt >> time_inference_windows.txt
+
+echo "${LOG_HEADER} End"
 
 exit  0
