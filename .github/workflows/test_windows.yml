@@ -27,12 +27,18 @@ jobs:
     - name: Build and Test
       run: |
         cd InferenceHelper_Sample
+        echo "inference time" > time_inference_windows.txt
         ./test_script/build_run_windows.ps1 MNN
+        ./test_script/build_run_windows.ps1 NCNN
+        ./test_script/build_run_windows.ps1 TFLITE
+        ./test_script/build_run_windows.ps1 TFLITE_DELEGATE_XNNPACK
+        ./test_script/build_run_windows.ps1 NNABLA
+        ./test_script/build_run_windows.ps1 OPENCV
         cd ..
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: time_inference_MNN_windows.txt
-        path: ./InferenceHelper_Sample/build/time_inference.txt
+        name: time_inference_windows.txt
+        path: ./InferenceHelper_Sample/time_inference_windows.txt
 
