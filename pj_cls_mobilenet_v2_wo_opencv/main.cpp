@@ -343,6 +343,7 @@ static int32_t DL_Process(uint8_t* resized_img)
     std::ofstream os("time_inference.txt", std::ios::out);
     os << time_inference << " [ms]" << std::endl;
     os.close();
+    printf("Inference Time = %lf [ms]", time_inference);
 
     const int32_t kTrueAnswer = HAS_BACKGOUND ? 89 : 88;
     if (max_index == kTrueAnswer) {
