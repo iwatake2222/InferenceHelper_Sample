@@ -15,7 +15,7 @@ set -e
 
 FRAMEWORK_NAME=${1:-"MNN"}
 BUILD_ONLY=${2:-0}
-LOG_HEADER="[CI_UBUNTU_${FRAMEWORK_NAME}]"
+LOG_HEADER="[CI_LINUX_${FRAMEWORK_NAME}]"
 echo "${LOG_HEADER} Start"
 
 # ${L_SUDO} apt update
@@ -43,7 +43,7 @@ echo "${LOG_HEADER} Run Start"
 echo "${LOG_HEADER} Run End"
 
 
-echo "$FRAMEWORK_NAME" >> ../../time_inference_ubuntu.txt
-cat time_inference.txt >> ../../time_inference_ubuntu.txt
+echo "$FRAMEWORK_NAME" >> ../../time_inference_linux.txt
+cat time_inference.txt >> ../../time_inference_linux.txt
 
 echo "${LOG_HEADER} End"

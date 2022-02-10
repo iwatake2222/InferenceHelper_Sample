@@ -39,18 +39,18 @@ jobs:
 
         # Build and Run
         cd InferenceHelper_Sample
-        echo "inference time" > time_inference_ubuntu.txt
-        sh ./01_script/build_run_ubuntu.sh TFLITE
-        sh ./01_script/build_run_ubuntu.sh TFLITE_DELEGATE_XNNPACK
-        sh ./01_script/build_run_ubuntu.sh TFLITE_DELEGATE_EDGETPU 1
-        sh ./01_script/build_run_ubuntu.sh OPENCV
-        sh ./01_script/build_run_ubuntu.sh NCNN
-        sh ./01_script/build_run_ubuntu.sh MNN
-        sh ./01_script/build_run_ubuntu.sh ARMNN
-        # sh ./01_script/build_run_ubuntu.sh NNABLA
+        echo "inference time" > time_inference_linux.txt
+        sh ./01_script/build_run_linux.sh TFLITE
+        sh ./01_script/build_run_linux.sh TFLITE_DELEGATE_XNNPACK
+        sh ./01_script/build_run_linux.sh TFLITE_DELEGATE_EDGETPU 1
+        sh ./01_script/build_run_linux.sh OPENCV
+        sh ./01_script/build_run_linux.sh NCNN
+        sh ./01_script/build_run_linux.sh MNN
+        sh ./01_script/build_run_linux.sh ARMNN
+        # sh ./01_script/build_run_linux.sh NNABLA
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: time_inference_ubuntu.txt
-        path: ./InferenceHelper_Sample/time_inference_ubuntu.txt
+        name: time_inference_linux.txt
+        path: ./InferenceHelper_Sample/time_inference_linux.txt
