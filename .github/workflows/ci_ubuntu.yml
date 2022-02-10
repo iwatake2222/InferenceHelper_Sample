@@ -2,7 +2,10 @@ name: CI Ubuntu
 
 on:
   push:
-    tags: '*'
+    tags: 'v*'
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
