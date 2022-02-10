@@ -49,13 +49,13 @@ jobs:
         # Build and Run
         cd InferenceHelper_Sample
         if($?) { echo "inference time" > time_inference_windows.txt }
-        if($?) { ./test_script/build_run_windows.ps1 TFLITE }
-        if($?) { ./test_script/build_run_windows.ps1 TFLITE_DELEGATE_XNNPACK }
-        if($?) { ./test_script/build_run_windows.ps1 TFLITE_DELEGATE_EDGETPU -BUILD_ONLY }
-        if($?) { ./test_script/build_run_windows.ps1 OPENCV }
-        if($?) { ./test_script/build_run_windows.ps1 NCNN -BUILD_ONLY }
-        if($?) { ./test_script/build_run_windows.ps1 MNN }
-        if($?) { ./test_script/build_run_windows.ps1 NNABLA }
+        if($?) { ./01_script/build_run_windows.ps1 TFLITE }
+        if($?) { ./01_script/build_run_windows.ps1 TFLITE_DELEGATE_XNNPACK }
+        if($?) { ./01_script/build_run_windows.ps1 TFLITE_DELEGATE_EDGETPU -BUILD_ONLY }
+        if($?) { ./01_script/build_run_windows.ps1 OPENCV }
+        if($?) { ./01_script/build_run_windows.ps1 NCNN -BUILD_ONLY }
+        if($?) { ./01_script/build_run_windows.ps1 MNN }
+        if($?) { ./01_script/build_run_windows.ps1 NNABLA }
         exit $LASTEXITCODE
 
     - name: Upload Artifacts
