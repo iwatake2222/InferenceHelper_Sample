@@ -13,6 +13,13 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
+    - uses: actions/checkout@v2
+    - name: Get project source code
+      run: |
+        git submodule update --init
+        sh InferenceHelper/third_party/download_prebuilt_libraries.sh
+        sh ./download_resource.sh
+
     - name: Install Requirements
       run: |
         sudo apt update
@@ -26,22 +33,11 @@ jobs:
         tar xzvf vulkan-sdk.tar.gz
         export VULKAN_SDK=$(pwd)/1.2.198.1/x86_64
 
-    - name: Get source code
-      run: |
-        git clone https://github.com/iwatake2222/InferenceHelper_Sample
-        cd InferenceHelper_Sample
-        echo  "Current branch:  ${{github.ref}}"
-        git checkout ${{ github.ref }}
-        git submodule update --init
-        sh InferenceHelper/third_party/download_prebuilt_libraries.sh
-        sh ./download_resource.sh
-
     - name: Build and Run
       run: |
         export VULKAN_SDK=$(pwd)/1.2.198.1/x86_64
 
         # Build and Run
-        cd InferenceHelper_Sample
         echo "inference time" > time_inference_linux.txt
         sh ./01_script/build_run_linux.sh TFLITE
         sh ./01_script/build_run_linux.sh TFLITE_DELEGATE_XNNPACK
@@ -56,4 +52,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: time_inference_linux.txt
-        path: ./InferenceHelper_Sample/time_inference_linux.txt
+        path: time_inference_linux.txt
