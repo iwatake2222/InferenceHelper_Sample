@@ -30,7 +30,7 @@
 ### 0. Requirements
 - OpenCV 4.x
 
-### 1. Common 
+### 1. Download 
 - Get source code
     ```sh
     git clone https://github.com/iwatake2222/InferenceHelper_Sample
@@ -45,7 +45,7 @@
     sh ./download_resource.sh
     ```
 
-### 2-a. Linux (PC Ubuntu, Raspberry Pi, Jetson Nano, etc.)
+### 2-a. Build in Linux (PC Ubuntu, Raspberry Pi, Jetson Nano, etc.)
 ```sh
 cd pj_cls_mobilenet_v2
 mkdir -p build && cd build
@@ -54,7 +54,7 @@ make
 ./main
 ```
 
-### 2-b. Windows (Visual Studio)
+### 2-b. Build in Windows (Visual Studio)
 - Configure and Generate a new project using cmake-gui for Visual Studio 2019 64-bit
     - `Where is the source code` : path-to-InferenceHelper_Sample/pj_cls_mobilenet_v2
     - `Where to build the binaries` : path-to-build	(any)
@@ -62,7 +62,7 @@ make
 - Open `main.sln`
 - Set `main` project as a startup project, then build and run!
 
-### 2-c. Linux (Cross compile for armv7 and aarch64)
+### 2-c. Build in Linux (Cross compile for armv7 and aarch64)
 ```
 sudo apt install g++-arm-linux-gnueabi g++-arm-linux-gnueabihf g++-aarch64-linux-gnu
 
@@ -77,7 +77,7 @@ cmake .. -DBUILD_SYSTEM=armv7 -DINFERENCE_HELPER_ENABLE_MNN=on
 
 You need to link appropreate OpenCV.
 
-### 2-d. Android
+### 2-d. Build in Android
 - Requirements
     - Android Studio
         - Compile Sdk Version
