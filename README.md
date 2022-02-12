@@ -27,10 +27,10 @@
 ```
 
 ## How to build a sample project
-### Requirements
+### 0. Requirements
 - OpenCV 4.x
 
-### Common 
+### 1. Common 
 - Get source code
     ```sh
     git clone https://github.com/iwatake2222/InferenceHelper_Sample
@@ -39,21 +39,13 @@
     sh InferenceHelper/third_party/download_prebuilt_libraries.sh
     ```
     - If you have a problem, please refer to  https://github.com/iwatake2222/InferenceHelper#installation
-- Download models
     - If your host PC is Windows but you want to build/run on Linux, it's better to run this script on the target device(Linux). Otherwise, symbolic link will broken.
+- Download models
     ```sh
     sh ./download_resource.sh
     ```
 
-### Windows (Visual Studio)
-- Configure and Generate a new project using cmake-gui for Visual Studio 2019 64-bit
-    - `Where is the source code` : path-to-InferenceHelper_Sample/pj_cls_mobilenet_v2
-    - `Where to build the binaries` : path-to-build	(any)
-    - Check one of the liseted InferenceHelperFramework (e.g. `INFERENCE_HELPER_ENABLE_MNN` )
-- Open `main.sln`
-- Set `main` project as a startup project, then build and run!
-
-### Linux (PC Ubuntu, Raspberry Pi, Jetson Nano, etc.)
+### 2-a. Linux (PC Ubuntu, Raspberry Pi, Jetson Nano, etc.)
 ```sh
 cd pj_cls_mobilenet_v2
 mkdir -p build && cd build
@@ -62,7 +54,15 @@ make
 ./main
 ```
 
-### Linux (Cross compile for armv7 and aarch64)
+### 2-b. Windows (Visual Studio)
+- Configure and Generate a new project using cmake-gui for Visual Studio 2019 64-bit
+    - `Where is the source code` : path-to-InferenceHelper_Sample/pj_cls_mobilenet_v2
+    - `Where to build the binaries` : path-to-build	(any)
+    - Check one of the liseted InferenceHelperFramework (e.g. `INFERENCE_HELPER_ENABLE_MNN` )
+- Open `main.sln`
+- Set `main` project as a startup project, then build and run!
+
+### 2-c. Linux (Cross compile for armv7 and aarch64)
 ```
 sudo apt install g++-arm-linux-gnueabi g++-arm-linux-gnueabihf g++-aarch64-linux-gnu
 
@@ -77,7 +77,7 @@ cmake .. -DBUILD_SYSTEM=armv7 -DINFERENCE_HELPER_ENABLE_MNN=on
 
 You need to link appropreate OpenCV.
 
-### Android
+### 2-d. Android
 - Requirements
     - Android Studio
         - Compile Sdk Version
@@ -118,6 +118,8 @@ You need to link appropreate OpenCV.
     - `set(ImageProcessor_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../../../pj_cls_mobilenet_v2/image_processor")`
 - Copy `resource` directory to `/storage/emulated/0/Android/data/com.iwatake.viewandroidinferencehelpersample/files/Documents/resource` (<- e.g.) . The directory will be created after running the app (so the first run should fail because model files cannot be read)
 
+
+## Note
 ### Options (Select Deep Leraning framework)
 - Choose one of the following options.
     - *Note* : InferenceHelper itself supports multiple frameworks (i.e. you can set `on` for several frameworks). However, in this sample project the selected framework is used to `create` InferenceHelper instance for the sake of ease. 
@@ -138,12 +140,11 @@ cmake .. \
 ```
 
 ### Note: TensorFlow Lite + EdgeTPU
-- You may need run the app using something like the following
-
-```sh
-cp libedgetpu.so.1.0 libedgetpu.so.1
-sudo LD_LIBRARY_PATH=./ ./main
-```
+- You may need something like the following commands to run the app
+    ```sh
+    cp libedgetpu.so.1.0 libedgetpu.so.1
+    sudo LD_LIBRARY_PATH=./ ./main
+    ```
 
 ### Note: ncnn
 - Build for Android
