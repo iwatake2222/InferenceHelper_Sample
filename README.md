@@ -77,7 +77,7 @@ cmake .. -DBUILD_SYSTEM=armv7 -DINFERENCE_HELPER_ENABLE_MNN=on
 
 You need to link appropreate OpenCV.
 
-### 2-d. Build in Android
+### 2-d. Build in Android Studio
 - Requirements
     - Android Studio
         - Compile Sdk Version
@@ -92,9 +92,9 @@ You need to link appropreate OpenCV.
                 - `bionic/libc/include/bits/fortify/unistd.h:174: undefined reference to `__write_chk'`
                 - https://github.com/android/ndk/issues/1179
     - Android NDK
-        - 21.3.6528147
+        - 23.1.7779620
     - OpenCV
-        - opencv-4.4.0-android-sdk.zip
+        - opencv-4.3.0-android-sdk.zip
     - *The version is just the version I used
 
 - Configure NDK
@@ -103,7 +103,7 @@ You need to link appropreate OpenCV.
     - Modify `local.properties` to specify `sdk.dir` and `ndk.dir`  (after Android Studio 4.1)
         ```
         sdk.dir=C\:\\Users\\xxx\\AppData\\Local\\Android\\Sdk
-        ndk.dir=C\:\\Users\\xxx\\AppData\\Local\\Android\\sdk\\ndk\\22.0.7026061
+        ndk.dir=C\:\\Users\\xxx\\AppData\\Local\\Android\\sdk\\ndk\\23.1.7779620
         ```
 
 - Import OpenCV
@@ -113,11 +113,13 @@ You need to link appropreate OpenCV.
     - FIle -> Project Structure -> Dependencies -> app -> Declared Dependencies -> + -> Module Dependencies
         - select sdk
     - In case you cannot import OpenCV module, remove sdk module and dependency of app to sdk in Project Structure
-                - Do `git update-index --skip-worktree ViewAndroid/app/build.gradle ViewAndroid/settings.gradle ViewAndroid/.idea/gradle.xml` not to save modified settings including opencv sdk
-- Modify `ViewAndroid\app\src\main\cpp\CMakeLists.txt` to call image processor function you want to use.
+- Note: To avoid saving modified settings, use the following command
+    - `git update-index --skip-worktree ViewAndroid/app/build.gradle ViewAndroid/settings.gradle ViewAndroid/.idea/gradle.xml` 
+- Copy `resource` directory to `/storage/emulated/0/Android/data/com.iwatake.viewandroidinferencehelpersample/files/Documents/resource`
+    - the directory will be created after running the app (so the first run should fail because model files cannot be read)
+- Modify `ViewAndroid\app\src\main\cpp\CMakeLists.txt` to select a image processor you want to use
     - `set(ImageProcessor_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../../../pj_cls_mobilenet_v2/image_processor")`
-- Copy `resource` directory to `/storage/emulated/0/Android/data/com.iwatake.viewandroidinferencehelpersample/files/Documents/resource` (<- e.g.) . The directory will be created after running the app (so the first run should fail because model files cannot be read)
-
+    - replace `pj_cls_mobilenet_v2` to another
 
 ## Note
 ### Options (Select Deep Leraning framework)
