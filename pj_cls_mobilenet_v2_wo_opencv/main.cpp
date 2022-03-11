@@ -171,6 +171,15 @@ static constexpr int32_t kRetErr = -1;
 #define IS_NCHW     true
 #define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #define HAS_BACKGOUND true
+#elif defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME) || defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME_CUDA)
+#define MODEL_NAME  "mobilenet_v2_1.0_224.onnx"
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define INPUT_NAME  "input"
+#define INPUT_DIMS  { 1, 3, 224, 224 }
+#define IS_NCHW     true
+#define IS_RGB      true
+#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
+#define HAS_BACKGOUND true
 #else
 #define MODEL_NAME  "error"
 #endif
@@ -261,6 +270,10 @@ static int32_t DL_Initialize(const std::string& work_dir, const int32_t num_thre
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kNnabla));
 #elif defined(INFERENCE_HELPER_ENABLE_NNABLA_CUDA)
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kNnablaCuda));
+#elif defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME)
+    inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kOnnxRuntime));
+#elif defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME_CUDA)
+    inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kOnnxRuntimeCuda));
 #else
     PRINT_E("Inference Helper type is not selected\n");
 #endif
