@@ -47,6 +47,7 @@ jobs:
         sh ./01_script/build_run_linux.sh MNN
         sh ./01_script/build_run_linux.sh ARMNN
         # sh ./01_script/build_run_linux.sh NNABLA
+        sh ./01_script/build_run_linux.sh ONNX_RUNTIME
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
