@@ -134,6 +134,18 @@ limitations under the License.
 #define IS_NCHW     true
 #define IS_RGB      true
 #define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
+#elif defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME) || defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME_CUDA)
+#if defined(ANDROID) || defined(__ANDROID__)
+#define MODEL_NAME  "mobilenet_v2_1.0_224.all.ort"
+#else
+#define MODEL_NAME  "mobilenet_v2_1.0_224.onnx"
+#endif
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define INPUT_NAME  "input"
+#define INPUT_DIMS  { 1, 3, 224, 224 }
+#define IS_NCHW     true
+#define IS_RGB      true
+#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #else
 #define MODEL_NAME  "error"
 #endif
@@ -198,6 +210,10 @@ int32_t ClassificationEngine::Initialize(const std::string& work_dir, const int3
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kNnabla));
 #elif defined(INFERENCE_HELPER_ENABLE_NNABLA_CUDA)
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kNnablaCuda));
+#elif defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME)
+    inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kOnnxRuntime));
+#elif defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME_CUDA)
+    inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kOnnxRuntimeCuda));
 #else
     PRINT_E("Inference Helper type is not selected\n");
 #endif
@@ -255,9 +271,9 @@ int32_t ClassificationEngine::Process(const cv::Mat& original_mat, Result& resul
     int32_t crop_w = original_mat.cols;
     int32_t crop_h = original_mat.rows;
     cv::Mat img_src = cv::Mat::zeros(input_tensor_info.GetHeight(), input_tensor_info.GetWidth(), CV_8UC3);
-    //CommonHelper::CropResizeCvt(original_mat, img_src, crop_x, crop_y, crop_w, crop_h, IS_RGB, CommonHelper::kCropTypeStretch);
+    CommonHelper::CropResizeCvt(original_mat, img_src, crop_x, crop_y, crop_w, crop_h, IS_RGB, CommonHelper::kCropTypeStretch);
     //CommonHelper::CropResizeCvt(original_mat, img_src, crop_x, crop_y, crop_w, crop_h, IS_RGB, CommonHelper::kCropTypeCut);
-    CommonHelper::CropResizeCvt(original_mat, img_src, crop_x, crop_y, crop_w, crop_h, IS_RGB, CommonHelper::kCropTypeExpand);
+    //CommonHelper::CropResizeCvt(original_mat, img_src, crop_x, crop_y, crop_w, crop_h, IS_RGB, CommonHelper::kCropTypeExpand);
 
     input_tensor_info.data = img_src.data;
     input_tensor_info.data_type = InputTensorInfo::kDataTypeImage;
