@@ -172,7 +172,11 @@ static constexpr int32_t kRetErr = -1;
 #define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #define HAS_BACKGOUND true
 #elif defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME) || defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME_CUDA)
+#if defined(ANDROID) || defined(__ANDROID__)
+#define MODEL_NAME  "mobilenet_v2_1.0_224.all.ort"
+#else
 #define MODEL_NAME  "mobilenet_v2_1.0_224.onnx"
+#endif
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
