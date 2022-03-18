@@ -125,23 +125,25 @@ You need to link appropreate OpenCV.
 ## Note
 ### Options (Select Deep Leraning framework)
 - Choose one of the following options.
-    - *Note* : InferenceHelper itself supports multiple frameworks (i.e. you can set `on` for several frameworks). However, in this sample project the selected framework is used to `create` InferenceHelper instance for the sake of ease. 
+    - *Note* : InferenceHelper itself supports multiple frameworks (i.e. you can set `on` for several frameworks). However, in this sample project the selected framework is also used to `create` InferenceHelper instance for the sake of ease. 
+    - *Note* : When you change an option, it's safer to clean all the project before you re-run cmake
 
 ```sh
-cmake .. \
--DINFERENCE_HELPER_ENABLE_OPENCV=off \
--DINFERENCE_HELPER_ENABLE_TFLITE=off \
--DINFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_XNNPACK=off \
--DINFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_GPU=off \
--DINFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_EDGETPU=off \
--DINFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_NNAPI=off \
--DINFERENCE_HELPER_ENABLE_TENSORRT=off \
--DINFERENCE_HELPER_ENABLE_NCNN=off \
--DINFERENCE_HELPER_ENABLE_MNN=on \
--DINFERENCE_HELPER_ENABLE_SNPE=off \
--DINFERENCE_HELPER_ENABLE_ARMNN=off \
--DINFERENCE_HELPER_ENABLE_ONNX_RUNTIME=off \
--DINFERENCE_HELPER_ENABLE_ONNX_RUNTIME_CUDA=off
+cmake .. -DINFERENCE_HELPER_ENABLE_OPENCV=on
+cmake .. -DINFERENCE_HELPER_ENABLE_TFLITE=on
+cmake .. -DINFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_XNNPACK=on
+cmake .. -DINFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_GPU=on
+cmake .. -DINFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_EDGETPU=on
+cmake .. -DINFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_NNAPI=on
+cmake .. -DINFERENCE_HELPER_ENABLE_TENSORRT=on
+cmake .. -DINFERENCE_HELPER_ENABLE_NCNN=on
+cmake .. -DINFERENCE_HELPER_ENABLE_MNN=on
+cmake .. -DINFERENCE_HELPER_ENABLE_SNPE=on
+cmake .. -DINFERENCE_HELPER_ENABLE_ARMNN=on
+cmake .. -DINFERENCE_HELPER_ENABLE_ONNX_RUNTIME=on
+cmake .. -DINFERENCE_HELPER_ENABLE_ONNX_RUNTIME_CUDA=on
+cmake .. -DINFERENCE_HELPER_ENABLE_LIBTORCH=on
+cmake .. -DINFERENCE_HELPER_ENABLE_LIBTORCH_CUDA=on
 ```
 
 ### Note: TensorFlow Lite + EdgeTPU

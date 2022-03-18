@@ -184,6 +184,15 @@ static constexpr int32_t kRetErr = -1;
 #define IS_RGB      true
 #define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #define HAS_BACKGOUND true
+#elif defined(INFERENCE_HELPER_ENABLE_LIBTORCH) || defined(INFERENCE_HELPER_ENABLE_LIBTORCH_CUDA)
+#define MODEL_NAME  "mobilenet_v2_traced.pt"
+#define HAS_BACKGOUND false
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define INPUT_NAME  "dummy"
+#define INPUT_DIMS  { 1, 3, 224, 224 }
+#define IS_NCHW     true
+#define IS_RGB      true
+#define OUTPUT_NAME "dummy"
 #else
 #define MODEL_NAME  "error"
 #endif
@@ -278,6 +287,10 @@ static int32_t DL_Initialize(const std::string& work_dir, const int32_t num_thre
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kOnnxRuntime));
 #elif defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME_CUDA)
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kOnnxRuntimeCuda));
+#elif defined(INFERENCE_HELPER_ENABLE_LIBTORCH)
+    inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kLibtorch));
+#elif defined(INFERENCE_HELPER_ENABLE_LIBTORCH_CUDA)
+    inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kLibtorchCuda));
 #else
     PRINT_E("Inference Helper type is not selected\n");
 #endif

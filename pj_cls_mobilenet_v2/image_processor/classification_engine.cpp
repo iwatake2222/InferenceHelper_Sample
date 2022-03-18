@@ -43,6 +43,7 @@ limitations under the License.
 #if defined(INFERENCE_HELPER_ENABLE_OPENCV)
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define MODEL_NAME  "mobilenetv2-1.0.onnx"
+#define HAS_BACKGOUND false
 #define INPUT_NAME  "data"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
 #define IS_NCHW     true
@@ -51,6 +52,7 @@ limitations under the License.
 #elif defined(INFERENCE_HELPER_ENABLE_TFLITE) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_XNNPACK) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_GPU) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_NNAPI)
 #if 1
 #define MODEL_NAME  "mobilenet_v2_1.0_224.tflite"
+#define HAS_BACKGOUND true
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 224, 224, 3 }
@@ -59,6 +61,7 @@ limitations under the License.
 #define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #else
 #define MODEL_NAME  "mobilenet_v2_1.0_224_quant.tflite"
+#define HAS_BACKGOUND true
 #define TENSORTYPE  TensorInfo::kTensorTypeUint8
 #define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 224, 224, 3 }
@@ -68,6 +71,7 @@ limitations under the License.
 #endif
 #elif defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_EDGETPU)
 #define MODEL_NAME  "mobilenet_v2_1.0_224_quant_edgetpu.tflite"
+#define HAS_BACKGOUND true
 #define TENSORTYPE  TensorInfo::kTensorTypeUint8
 #define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 224, 224, 3 }
@@ -78,6 +82,7 @@ limitations under the License.
 #include "inference_helper_tensorrt.h"
 #define MODEL_NAME  "mobilenet_v2_1.0_224.onnx"
 //#define MODEL_NAME   "mobilenet_v2_1.0_224.trt"
+#define HAS_BACKGOUND true
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
@@ -86,6 +91,7 @@ limitations under the License.
 #define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #elif defined(INFERENCE_HELPER_ENABLE_NCNN)
 #define MODEL_NAME  "mobilenet_v2_1.0_224.param"
+#define HAS_BACKGOUND true
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
@@ -94,6 +100,7 @@ limitations under the License.
 #define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #elif defined(INFERENCE_HELPER_ENABLE_MNN)
 #define MODEL_NAME  "mobilenet_v2_1.0_224.mnn"
+#define HAS_BACKGOUND true
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
@@ -102,6 +109,7 @@ limitations under the License.
 #define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #elif defined(INFERENCE_HELPER_ENABLE_SNPE)
 #define MODEL_NAME  "mobilenet_v2_1.0_224.dlc"
+#define HAS_BACKGOUND true
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define INPUT_NAME  "input:0"
 #define INPUT_DIMS  { 1, 224, 224, 3 }
@@ -111,6 +119,7 @@ limitations under the License.
 #elif defined(INFERENCE_HELPER_ENABLE_ARMNN)
 #if 1
 #define MODEL_NAME  "mobilenet_v2_1.0_224.tflite"
+#define HAS_BACKGOUND true
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 224, 224, 3 }
@@ -119,6 +128,7 @@ limitations under the License.
 #define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
 #else
 #define MODEL_NAME  "mobilenetv2-1.0.onnx"
+#define HAS_BACKGOUND false
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define INPUT_NAME  "data"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
@@ -129,6 +139,7 @@ limitations under the License.
 #elif defined(INFERENCE_HELPER_ENABLE_NNABLA) || defined(INFERENCE_HELPER_ENABLE_NNABLA_CUDA)
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define MODEL_NAME  "mobilenet_v2_1.0_224.nnp"
+#define HAS_BACKGOUND true
 #define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
 #define IS_NCHW     true
@@ -140,12 +151,22 @@ limitations under the License.
 #else
 #define MODEL_NAME  "mobilenet_v2_1.0_224.onnx"
 #endif
+#define HAS_BACKGOUND true
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define INPUT_NAME  "input"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
 #define IS_NCHW     true
 #define IS_RGB      true
 #define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
+#elif defined(INFERENCE_HELPER_ENABLE_LIBTORCH) || defined(INFERENCE_HELPER_ENABLE_LIBTORCH_CUDA)
+#define MODEL_NAME  "mobilenet_v2_traced.pt"
+#define HAS_BACKGOUND false
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define INPUT_NAME  "dummy"
+#define INPUT_DIMS  { 1, 3, 224, 224 }
+#define IS_NCHW     true
+#define IS_RGB      true
+#define OUTPUT_NAME "dummy"
 #else
 #define MODEL_NAME  "error"
 #endif
@@ -214,6 +235,10 @@ int32_t ClassificationEngine::Initialize(const std::string& work_dir, const int3
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kOnnxRuntime));
 #elif defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME_CUDA)
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kOnnxRuntimeCuda));
+#elif defined(INFERENCE_HELPER_ENABLE_LIBTORCH)
+    inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kLibtorch));
+#elif defined(INFERENCE_HELPER_ENABLE_LIBTORCH_CUDA)
+    inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kLibtorchCuda));
 #else
     PRINT_E("Inference Helper type is not selected\n");
 #endif
@@ -231,9 +256,6 @@ int32_t ClassificationEngine::Initialize(const std::string& work_dir, const int3
 
 
     /* read label */
-#if defined(INFERENCE_HELPER_ENABLE_OPENCV)
-    with_background = false;
-#endif
     if (ReadLabel(label_filename, label_list_) != kRetOk) {
         return kRetErr;
     }
@@ -358,7 +380,7 @@ int32_t ClassificationEngine::ReadLabel(const std::string& filename, std::vector
         return kRetErr;
     }
     label_list.clear();
-    if (with_background) {
+    if (HAS_BACKGOUND) {
         label_list.push_back("background");
     }
     std::string str;

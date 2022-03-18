@@ -48,9 +48,6 @@ public:
         {}
     } Result;
 
-private:
-    bool with_background = true;
-
 public:
     ClassificationEngine() {}
     ~ClassificationEngine() {}
