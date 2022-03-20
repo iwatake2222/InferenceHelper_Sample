@@ -167,6 +167,15 @@ limitations under the License.
 #define IS_NCHW     true
 #define IS_RGB      true
 #define OUTPUT_NAME "dummy"
+#elif defined(INFERENCE_HELPER_ENABLE_TENSORFLOW) || defined(INFERENCE_HELPER_ENABLE_TENSORFLOW_GPU)
+#define MODEL_NAME  "mobilenet_v2/"
+#define HAS_BACKGOUND false
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define INPUT_NAME  "serving_default_input_1:0"
+#define INPUT_DIMS  { 1, 224, 224, 3 }
+#define IS_NCHW     false
+#define IS_RGB      true
+#define OUTPUT_NAME "StatefulPartitionedCall:0"
 #else
 #define MODEL_NAME  "error"
 #endif
@@ -239,6 +248,10 @@ int32_t ClassificationEngine::Initialize(const std::string& work_dir, const int3
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kLibtorch));
 #elif defined(INFERENCE_HELPER_ENABLE_LIBTORCH_CUDA)
     inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kLibtorchCuda));
+#elif defined(INFERENCE_HELPER_ENABLE_TENSORFLOW)
+    inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kTensorflow));
+#elif defined(INFERENCE_HELPER_ENABLE_TENSORFLOW_GPU)
+    inference_helper_.reset(InferenceHelper::Create(InferenceHelper::kTensorflowGpu));
 #else
     PRINT_E("Inference Helper type is not selected\n");
 #endif
