@@ -8,7 +8,7 @@ onnxsim temp.onnx mobilenet_v2.onnx
 rm temp.onnx
 
 ### Craete ONNX Runtime model
-python3 -m onnxruntime.tools.convert_onnx_models_to_ort mobilenet_v2.onnx
+python3 -m onnxruntime.tools.convert_onnx_models_to_ort mobilenet_v2_op11.onnx
 
 ### Craete ncnn model (copy onnx2ncnn to the current directory)
 ./onnx2ncnn mobilenet_v2.onnx mobilenet_v2.ncnn.param mobilenet_v2.ncnn.bin

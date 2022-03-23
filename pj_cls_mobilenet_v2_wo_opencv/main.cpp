@@ -196,10 +196,17 @@ static constexpr int32_t kRetErr = -1;
 #define OUTPUT_NAME "466"
 #elif defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME) || defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME_CUDA)
 #if defined(ANDROID) || defined(__ANDROID__)
-#define MODEL_NAME  "mobilenet_v2.all.ort"
+#define MODEL_NAME  "mobilenet_v2_op11.all.ort"
+#define HAS_BACKGOUND false
+#define HAS_SOFTMAX  false
+#define INPUT_NAME  "input.1"
+#define INPUT_DIMS  { 1, 3, 224, 224 }
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define IS_NCHW     true
+#define IS_RGB      true
+#define OUTPUT_NAME "536"
 #else
 #define MODEL_NAME  "mobilenet_v2.onnx"
-#endif
 #define HAS_BACKGOUND false
 #define HAS_SOFTMAX  false
 #define INPUT_NAME  "input.1"
@@ -208,6 +215,7 @@ static constexpr int32_t kRetErr = -1;
 #define IS_NCHW     true
 #define IS_RGB      true
 #define OUTPUT_NAME "466"
+#endif
 #elif defined(INFERENCE_HELPER_ENABLE_LIBTORCH) || defined(INFERENCE_HELPER_ENABLE_LIBTORCH_CUDA)
 #define MODEL_NAME  "mobilenet_v2.jit.pt"
 #define HAS_BACKGOUND false
