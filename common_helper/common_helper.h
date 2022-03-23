@@ -42,4 +42,19 @@ limitations under the License.
     COMMON_HELPER_PRINT_(__VA_ARGS__); \
 } while(0);
 
+namespace CommonHelper
+{
+
+    float Sigmoid(float x);
+    float Logit(float x);
+    float SoftMaxFast(const float* src, float* dst, int32_t length);
+
+    template<typename T>
+    T& GetValue(std::vector<T>& val_list, std::vector<int32_t> shape, std::vector<int32_t> pos);
+    template<typename T>
+    void PrintValue(std::vector<T>& val_list, std::vector<int32_t> shape);
+
+}
+
+
 #endif

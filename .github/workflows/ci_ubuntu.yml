@@ -17,7 +17,7 @@ jobs:
     - name: Get project source code
       run: |
         git submodule update --init
-        sh InferenceHelper/third_party/download_prebuilt_libraries.sh
+        sh InferenceHelper/third_party/download_prebuilt_libraries.sh 1
         sh ./download_resource.sh
 
     - name: Install Requirements
