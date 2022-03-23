@@ -17,7 +17,7 @@ jobs:
     - name: Get project source code
       run: |
         git submodule update --init
-        sh InferenceHelper/third_party/download_prebuilt_libraries.sh
+        sh InferenceHelper/third_party/download_prebuilt_libraries.sh 1
         sh ./download_resource.sh
 
     - name: setup-msbuild
@@ -56,6 +56,8 @@ jobs:
         if($?) { ./01_script/build_run_windows.ps1 MNN }
         if($?) { ./01_script/build_run_windows.ps1 NNABLA }
         if($?) { ./01_script/build_run_windows.ps1 ONNX_RUNTIME }
+        if($?) { ./01_script/build_run_windows.ps1 LIBTORCH }
+        if($?) { ./01_script/build_run_windows.ps1 TENSORFLOW }
         exit $LASTEXITCODE
 
     - name: Upload Artifacts

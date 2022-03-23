@@ -41,75 +41,83 @@ limitations under the License.
 
 /* Model parameters */
 #if defined(INFERENCE_HELPER_ENABLE_OPENCV)
-#define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define MODEL_NAME  "mobilenetv2-1.0.onnx"
+#define MODEL_NAME  "mobilenet_v2.onnx"
+//#define MODEL_NAME  "mobilenet_v2.xml"    /* for OpenVINO */
 #define HAS_BACKGOUND false
-#define INPUT_NAME  "data"
+#define HAS_SOFTMAX  false
+#define INPUT_NAME  "input.1"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     true
 #define IS_RGB      true
-#define OUTPUT_NAME "mobilenetv20_output_flatten0_reshape0"
+#define OUTPUT_NAME "466"
 #elif defined(INFERENCE_HELPER_ENABLE_TFLITE) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_XNNPACK) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_GPU) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_NNAPI)
 #if 1
-#define MODEL_NAME  "mobilenet_v2_1.0_224.tflite"
-#define HAS_BACKGOUND true
+#define MODEL_NAME  "mobilenet_v2.tflite"
+#define HAS_BACKGOUND false
+#define HAS_SOFTMAX  true
+#define INPUT_NAME  "input_1"
+#define INPUT_DIMS  { 1, 224, 224, 3 }
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define INPUT_NAME  "input"
-#define INPUT_DIMS  { 1, 224, 224, 3 }
 #define IS_NCHW     false
 #define IS_RGB      true
-#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
+#define OUTPUT_NAME "Identity"
 #else
-#define MODEL_NAME  "mobilenet_v2_1.0_224_quant.tflite"
-#define HAS_BACKGOUND true
-#define TENSORTYPE  TensorInfo::kTensorTypeUint8
-#define INPUT_NAME  "input"
+#define MODEL_NAME  "mobilenet_v2_quant.tflite"
+#define HAS_BACKGOUND false
+#define HAS_SOFTMAX  true
+#define INPUT_NAME  "input_1"
 #define INPUT_DIMS  { 1, 224, 224, 3 }
+#define TENSORTYPE  TensorInfo::kTensorTypeUint8
 #define IS_NCHW     false
 #define IS_RGB      true
-#define OUTPUT_NAME "output"
+#define OUTPUT_NAME "Identity"
 #endif
 #elif defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_EDGETPU)
-#define MODEL_NAME  "mobilenet_v2_1.0_224_quant_edgetpu.tflite"
-#define HAS_BACKGOUND true
-#define TENSORTYPE  TensorInfo::kTensorTypeUint8
-#define INPUT_NAME  "input"
+#define MODEL_NAME  "mobilenet_v2_quant_edgetpu.tflite"
+#define HAS_BACKGOUND false
+#define HAS_SOFTMAX  true
+#define INPUT_NAME  "input_1"
 #define INPUT_DIMS  { 1, 224, 224, 3 }
+#define TENSORTYPE  TensorInfo::kTensorTypeUint8
 #define IS_NCHW     false
 #define IS_RGB      true
-#define OUTPUT_NAME "output"
+#define OUTPUT_NAME "Identity"
 #elif defined(INFERENCE_HELPER_ENABLE_TENSORRT)
 #include "inference_helper_tensorrt.h"
-#define MODEL_NAME  "mobilenet_v2_1.0_224.onnx"
-//#define MODEL_NAME   "mobilenet_v2_1.0_224.trt"
-#define HAS_BACKGOUND true
-#define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define INPUT_NAME  "input"
+#define MODEL_NAME  "mobilenet_v2.onnx"
+#define HAS_BACKGOUND false
+#define HAS_SOFTMAX  false
+#define INPUT_NAME  "input.1"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     true
 #define IS_RGB      true
-#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
+#define OUTPUT_NAME "466"
 #elif defined(INFERENCE_HELPER_ENABLE_NCNN)
-#define MODEL_NAME  "mobilenet_v2_1.0_224.param"
-#define HAS_BACKGOUND true
-#define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define INPUT_NAME  "input"
+#define MODEL_NAME  "mobilenet_v2.ncnn.param"
+#define HAS_BACKGOUND false
+#define HAS_SOFTMAX  false
+#define INPUT_NAME  "input.1"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     true
 #define IS_RGB      true
-#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
+#define OUTPUT_NAME "466"
 #elif defined(INFERENCE_HELPER_ENABLE_MNN)
-#define MODEL_NAME  "mobilenet_v2_1.0_224.mnn"
-#define HAS_BACKGOUND true
-#define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define INPUT_NAME  "input"
+#define MODEL_NAME  "mobilenet_v2.mnn"
+#define HAS_BACKGOUND false
+#define HAS_SOFTMAX  false
+#define INPUT_NAME  "input.1"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     true
 #define IS_RGB      true
-#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
+#define OUTPUT_NAME "466"
 #elif defined(INFERENCE_HELPER_ENABLE_SNPE)
 #define MODEL_NAME  "mobilenet_v2_1.0_224.dlc"
 #define HAS_BACKGOUND true
+#define HAS_SOFTMAX  false
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define INPUT_NAME  "input:0"
 #define INPUT_DIMS  { 1, 224, 224, 3 }
@@ -118,61 +126,75 @@ limitations under the License.
 #define OUTPUT_NAME "MobilenetV2/Predictions/Softmax:0"
 #elif defined(INFERENCE_HELPER_ENABLE_ARMNN)
 #if 1
-#define MODEL_NAME  "mobilenet_v2_1.0_224.tflite"
-#define HAS_BACKGOUND true
-#define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define INPUT_NAME  "input"
+#define MODEL_NAME  "mobilenet_v2.tflite"
+#define HAS_BACKGOUND false
+#define HAS_SOFTMAX  true
+#define INPUT_NAME  "input_1"
 #define INPUT_DIMS  { 1, 224, 224, 3 }
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     false
 #define IS_RGB      true
-#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
+#define OUTPUT_NAME "Identity"
 #else
-#define MODEL_NAME  "mobilenetv2-1.0.onnx"
+#define MODEL_NAME  "mobilenet_v2.onnx"
 #define HAS_BACKGOUND false
-#define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define INPUT_NAME  "data"
+#define HAS_SOFTMAX  false
+#define INPUT_NAME  "input.1"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     true
 #define IS_RGB      true
-#define OUTPUT_NAME "mobilenetv20_output_flatten0_reshape0"
+#define OUTPUT_NAME "466"
 #endif
 #elif defined(INFERENCE_HELPER_ENABLE_NNABLA) || defined(INFERENCE_HELPER_ENABLE_NNABLA_CUDA)
-#define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define MODEL_NAME  "mobilenet_v2_1.0_224.nnp"
-#define HAS_BACKGOUND true
-#define INPUT_NAME  "input"
+#define MODEL_NAME  "mobilenet_v2.nnp"
+#define HAS_BACKGOUND false
+#define HAS_SOFTMAX  false
+#define INPUT_NAME  "input.1"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     true
 #define IS_RGB      true
-#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
+#define OUTPUT_NAME "466"
 #elif defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME) || defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME_CUDA)
 #if defined(ANDROID) || defined(__ANDROID__)
-#define MODEL_NAME  "mobilenet_v2_1.0_224.all.ort"
-#else
-#define MODEL_NAME  "mobilenet_v2_1.0_224.onnx"
-#endif
-#define HAS_BACKGOUND true
-#define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define INPUT_NAME  "input"
+#define MODEL_NAME  "mobilenet_v2_op11.all.ort"
+#define HAS_BACKGOUND false
+#define HAS_SOFTMAX  false
+#define INPUT_NAME  "input.1"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     true
 #define IS_RGB      true
-#define OUTPUT_NAME "MobilenetV2/Predictions/Reshape_1"
-#elif defined(INFERENCE_HELPER_ENABLE_LIBTORCH) || defined(INFERENCE_HELPER_ENABLE_LIBTORCH_CUDA)
-#define MODEL_NAME  "mobilenet_v2_traced.pt"
+#define OUTPUT_NAME "536"
+#else
+#define MODEL_NAME  "mobilenet_v2.onnx"
 #define HAS_BACKGOUND false
+#define HAS_SOFTMAX  false
+#define INPUT_NAME  "input.1"
+#define INPUT_DIMS  { 1, 3, 224, 224 }
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define IS_NCHW     true
+#define IS_RGB      true
+#define OUTPUT_NAME "466"
+#endif
+#elif defined(INFERENCE_HELPER_ENABLE_LIBTORCH) || defined(INFERENCE_HELPER_ENABLE_LIBTORCH_CUDA)
+#define MODEL_NAME  "mobilenet_v2.jit.pt"
+#define HAS_BACKGOUND false
+#define HAS_SOFTMAX  false
 #define INPUT_NAME  "dummy"
 #define INPUT_DIMS  { 1, 3, 224, 224 }
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     true
 #define IS_RGB      true
 #define OUTPUT_NAME "dummy"
 #elif defined(INFERENCE_HELPER_ENABLE_TENSORFLOW) || defined(INFERENCE_HELPER_ENABLE_TENSORFLOW_GPU)
-#define MODEL_NAME  "mobilenet_v2/"
+#define MODEL_NAME  "mobilenet_v2/saved_model"
 #define HAS_BACKGOUND false
-#define TENSORTYPE  TensorInfo::kTensorTypeFp32
+#define HAS_SOFTMAX  false
 #define INPUT_NAME  "serving_default_input_1:0"
 #define INPUT_DIMS  { 1, 224, 224, 3 }
+#define TENSORTYPE  TensorInfo::kTensorTypeFp32
 #define IS_NCHW     false
 #define IS_RGB      true
 #define OUTPUT_NAME "StatefulPartitionedCall:0"
@@ -365,9 +387,13 @@ int32_t ClassificationEngine::Process(const cv::Mat& original_mat, Result& resul
     /*** PostProcess ***/
     const auto& t_post_process0 = std::chrono::steady_clock::now();
     /* Retrieve the result */
-    std::vector<float> output_score_list(output_tensor_info_list_[0].GetDataAsFloat(), output_tensor_info_list_[0].GetDataAsFloat() + output_tensor_info_list_[0].GetElementNum());
+    std::vector<float> output_score_raw_list(output_tensor_info_list_[0].GetDataAsFloat(), output_tensor_info_list_[0].GetDataAsFloat() + output_tensor_info_list_[0].GetElementNum());
 
     /* Find the max score */
+    std::vector<float> output_score_list = output_score_raw_list;
+    if (!HAS_SOFTMAX) {
+        CommonHelper::SoftMaxFast(output_score_raw_list.data(), output_score_list.data(), static_cast<int32_t>(output_score_list.size()));
+    }
     int32_t max_index = (int32_t)(std::max_element(output_score_list.begin(), output_score_list.end()) - output_score_list.begin());
     auto max_score = *std::max_element(output_score_list.begin(), output_score_list.end());
     PRINT("Result = %s (%d) (%.3f)\n", label_list_[max_index].c_str(), max_index, max_score);
