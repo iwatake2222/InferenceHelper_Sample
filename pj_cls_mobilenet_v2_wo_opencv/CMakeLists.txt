@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 # Create project
 set(ProjectName "main")
 project(${ProjectName})
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${ProjectName})
 
 # Select build system and set compile options
 include(${CMAKE_CURRENT_LIST_DIR}/../common_helper/cmakes/build_setting.cmake)

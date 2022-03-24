@@ -13,18 +13,19 @@
 ```
 ./main [input]
 
- - input = blank
-    - use the default image file set in source code (main.cpp)
-    - e.g. ./main
- - input = *.mp4, *.avi, *.webm
-    - use video file
-    - e.g. ./main test.mp4
- - input = *.jpg, *.png, *.bmp
-    - use image file
-    - e.g. ./main test.jpg
- - input = number (e.g. 0, 1, 2, ...)
-    - use camera
-    - e.g. ./main 0
+ - option description: [input]
+    - blank
+        - use the default image file set in source code (main.cpp)
+        - e.g. `./main`
+     - *.mp4, *.avi, *.webm
+        - use video file
+        - e.g. `./main test.mp4`
+    - *.jpg, *.png, *.bmp
+        - use image file
+        - e.g. `./main test.jpg`
+    - number (e.g. 0, 1, 2, ...)
+        - use camera
+        - e.g. `./main 0`
 ```
 
 ## How to build a sample project
@@ -40,7 +41,7 @@
     sh InferenceHelper/third_party/download_prebuilt_libraries.sh
     ```
     - If you have a problem, please refer to  https://github.com/iwatake2222/InferenceHelper#installation
-    - If your host PC is Windows but you want to build/run on Linux, it's better to run this script on the target device(Linux). Otherwise, symbolic link will broken.
+    - If your host PC is Windows but you want to build/run on Linux (like WSL2), it's better to run this script on the target OS(Linux). Otherwise, symbolic link will broken.
 - Download models
     ```sh
     sh ./download_resource.sh
@@ -123,7 +124,7 @@ You need to link appropreate OpenCV.
     - replace `pj_cls_mobilenet_v2` to another
 
 ## Note
-### Options (Select Deep Leraning framework)
+### Options: Select Deep Leraning framework
 - Choose one of the following options.
     - *Note* : InferenceHelper itself supports multiple frameworks (i.e. you can set `on` for several frameworks). However, in this sample project the selected framework is also used to `create` InferenceHelper instance for the sake of ease. 
     - *Note* : When you change an option, it's safer to clean all the project before you re-run cmake
@@ -140,6 +141,8 @@ cmake .. -DINFERENCE_HELPER_ENABLE_NCNN=on
 cmake .. -DINFERENCE_HELPER_ENABLE_MNN=on
 cmake .. -DINFERENCE_HELPER_ENABLE_SNPE=on
 cmake .. -DINFERENCE_HELPER_ENABLE_ARMNN=on
+cmake .. -DINFERENCE_HELPER_ENABLE_NNABLA=on
+cmake .. -DINFERENCE_HELPER_ENABLE_NNABLA_CUDA=on
 cmake .. -DINFERENCE_HELPER_ENABLE_ONNX_RUNTIME=on
 cmake .. -DINFERENCE_HELPER_ENABLE_ONNX_RUNTIME_CUDA=on
 cmake .. -DINFERENCE_HELPER_ENABLE_LIBTORCH=on
