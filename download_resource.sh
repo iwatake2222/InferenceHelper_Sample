@@ -20,4 +20,4 @@ download_and_extract() {
 ########################################################################
 
 move_dir_to_shell_file
-download_and_extract "https://github.com/iwatake2222/InferenceHelper_Sample/releases/download/20210702/resource_new_temp.zip"
+download_and_extract "https://github.com/iwatake2222/InferenceHelper_Sample/releases/download/20220324/resource.zip"
