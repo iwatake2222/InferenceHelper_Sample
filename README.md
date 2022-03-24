@@ -127,7 +127,7 @@ You need to link appropreate OpenCV.
 ### Options: Select Deep Leraning framework
 - Choose one of the following options.
     - *Note* : InferenceHelper itself supports multiple frameworks (i.e. you can set `on` for several frameworks). However, in this sample project the selected framework is also used to `create` InferenceHelper instance for the sake of ease. 
-    - *Note* : When you change an option, it's safer to clean all the project before you re-run cmake
+    - *Note* : When you change an option, it's safer to clean the project before you re-run cmake
 
 ```sh
 cmake .. -DINFERENCE_HELPER_ENABLE_OPENCV=on
