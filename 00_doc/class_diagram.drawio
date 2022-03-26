@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="2nVCpC3mRS13LhFPs2z5" name="Page-1">
-        <mxGraphModel dx="1013" dy="1198" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1004" dy="1182" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -40,49 +40,49 @@
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="104" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;fontSize=16;" vertex="1" parent="1">
+                <mxCell id="104" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;fontSize=16;" parent="1" vertex="1">
                     <mxGeometry x="230" y="220" width="600" height="180" as="geometry"/>
                 </mxCell>
-                <mxCell id="105" value="TensorFlow Lite" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+                <mxCell id="105" value="TensorFlow Lite" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
                     <mxGeometry x="406.7" y="250" width="130" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="106" value="OpenCV" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+                <mxCell id="106" value="OpenCV" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
                     <mxGeometry x="256.7" y="300" width="90" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="107" value="OpenVINO" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+                <mxCell id="107" value="OpenVINO" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
                     <mxGeometry x="366.7" y="300" width="100" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="108" value="ncnn" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+                <mxCell id="108" value="ncnn" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
                     <mxGeometry x="596.7" y="300" width="80" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="109" value="MNN" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+                <mxCell id="109" value="MNN" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
                     <mxGeometry x="696.7" y="300" width="80" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="110" value="SNPE" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+                <mxCell id="110" value="SNPE" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
                     <mxGeometry x="256.7" y="350" width="80" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="111" value="Arm NN" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+                <mxCell id="111" value="Arm NN" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
                     <mxGeometry x="356.7" y="350" width="80" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="112" value="NNabla" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+                <mxCell id="112" value="NNabla" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
                     <mxGeometry x="456.7" y="350" width="80" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="113" value="TensorRT" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+                <mxCell id="113" value="TensorRT" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
                     <mxGeometry x="486.7" y="300" width="90" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="114" value="DL Frameworks" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+                <mxCell id="114" value="DL Frameworks" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=18;" parent="1" vertex="1">
                     <mxGeometry x="230" y="220" width="150" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="115" value="LibTorch" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+                <mxCell id="115" value="LibTorch" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
                     <mxGeometry x="556.7" y="250" width="80" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="116" value="ONNX Runtime" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+                <mxCell id="116" value="ONNX Runtime" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
                     <mxGeometry x="656.7" y="250" width="130" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="117" value="TensorFlow" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+                <mxCell id="117" value="TensorFlow" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
                     <mxGeometry x="256.7" y="250" width="130" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="118" value="&lt;span style=&quot;font-weight: 700&quot;&gt;ClassificationEngine&lt;/span&gt;" style="html=1;fontSize=32;" vertex="1" parent="1">
+                <mxCell id="118" value="&lt;span style=&quot;&quot;&gt;ClassificationEngine&lt;/span&gt;" style="html=1;fontSize=32;fontStyle=0" parent="1" vertex="1">
                     <mxGeometry x="348.35" width="363.3" height="50" as="geometry"/>
                 </mxCell>
             </root>
