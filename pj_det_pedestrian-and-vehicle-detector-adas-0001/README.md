@@ -1,4 +1,4 @@
-# pedestrian-and-vehicle-detector-adas-0001 with TensorFlowLite/TensorRT/OpenCV/OpenVINO/MNN/ArmNN/NNabla/ONNXRuntime in C++ on Windows/Linux/Linux(Arm)/Android
+# pedestrian-and-vehicle-detector-adas-0001 with TensorFlowLite/TensorRT/OpenCV/OpenVINO/MNN/ArmNN/NNabla/ONNXRuntime/TensorFlow in C++ on Windows/Linux/Linux(Arm)/Android
 
 ![00_doc/demo.jpg](00_doc/demo.jpg)]
 
@@ -25,7 +25,7 @@
 | NNabla                    | [x]             | No library      | No library      | No library        |
 | ONNX Runtime              | [x]             | [x]             | [x]             | [x]               |
 | LibTorch                  | No model        | No model        | No model        | No model          |
-| TensorFlow                | [ ] error       | [ ] error       | No library      | No library        |
+| TensorFlow                | [x]             | [ ]             | No library      | No library        |
 
 ## Note
 - To run with OpenVINO, enable OpenCV and uncomment the following line

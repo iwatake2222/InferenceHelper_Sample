@@ -171,12 +171,12 @@ limitations under the License.
 #elif defined(INFERENCE_HELPER_ENABLE_TENSORFLOW) || defined(INFERENCE_HELPER_ENABLE_TENSORFLOW_GPU)
 #define MODEL_NAME  "pedestrian-and-vehicle-detector-adas-0001/saved_model"
 #define INPUT_NAME  "serving_default_data:0"
-#define INPUT_DIMS  { 1, 3, 384, 672 }
+#define INPUT_DIMS  { 1, 384, 672, 3 }
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
-#define IS_NCHW     true
+#define IS_NCHW     false
 #define IS_RGB      true
 #define OUTPUT_NAME_0 "StatefulPartitionedCall:0"
-#define OUTPUT_NAME_1 "StatefulPartitionedCall_1:0"
+#define OUTPUT_NAME_1 "StatefulPartitionedCall:1"
 #else
 #define MODEL_NAME  "error"
 #endif
