@@ -7,25 +7,25 @@
 2. Build `pj_det_yolox` project (this directory)
 
 
-## Tested environments
+## Tested Environments
 | Framework                 | Windows (x64)   | Linux (x64)     | Linux (aarch64) | Android (aarch64) |
 |---------------------------|-----------------|-----------------|-----------------|-------------------|
-| TensorFlow Lite           | [x]             | [x]             | [x]             | [x]               |
-| TensorFlow Lite + XNNPACK | [x]             | [x]             | [x]             | [x]               |
-| TensorFlow Lite + EdgeTPU | [x] bad result  | [ ]             | [x] bad result  | Unsupported       |
-| TensorFlow Lite + GPU     | No library      |  No library     | No library      | [x]               |
-| TensorFlow Lite + NNAPI   | No library      |  No library     | No library      | [x]               |
-| TensorRT                  | [x]             | [ ]             | [x]             | No library        |
-| OpenCV(dnn)               | [x]             | [x]             | [ ]             | [x]               |
-| OpenVINO with OpenCV      | [x]             | [x]             | Unsupported     | Unsupported       |
-| ncnn                      | [x]             | [x]             | No library      | [x]               |
-| MNN                       | [x]             | [x]             | [x]             | [x]               |
-| ~~SNPE~~                  | Unsupported     | Unsupported     | [ ]             | [ ]               |
-| Arm NN                    | Unsupported     | [ ]             | [x]             | No library        |
-| NNabla                    | [ ] no model    | No library      | No library      | No library        |
-| ONNX Runtime              | [x]             | [x]             | [x]             | [ ] error         |
+| TensorFlow Lite           | &check;         | &check;         | &check;         | &check;           |
+| TensorFlow Lite + XNNPACK | &check;         | &check;         | &check;         | &check;           |
+| TensorFlow Lite + EdgeTPU | Bad result      | Not tested      | Bad result      | Unsupported       |
+| TensorFlow Lite + GPU     | No library      | No library      | No library      | &check;           |
+| TensorFlow Lite + NNAPI   | No library      | No library      | No library      | &check;           |
+| TensorRT                  | &check;         | Not tested      | &check;         | No library        |
+| OpenCV(dnn)               | &check;         | &check;         | Not tested      | &check;           |
+| OpenVINO with OpenCV      | &check;         | &check;         | Unsupported     | Unsupported       |
+| ncnn                      | &check;         | &check;         | No library      | &check;           |
+| MNN                       | &check;         | &check;         | &check;         | &check;           |
+| SNPE                      | Unsupported     | Unsupported     | Not tested      | Not tested        |
+| Arm NN                    | Unsupported     | Not tested      | &check;         | No library        |
+| NNabla                    | No model        | No library      | No library      | No library        |
+| ONNX Runtime              | &check;         | &check;         | &check;         | Error             |
 | LibTorch                  | No model        | No model        | No model        | No model          |
-| TensorFlow                | [x]             | [ ]             | No library      | No library        |
+| TensorFlow                | &check;         | Not tested      | No library      | No library        |
 
 ## Note
 - To run with OpenVINO, enable OpenCV and uncomment the following line
