@@ -41,8 +41,8 @@ limitations under the License.
 
 /* Model parameters */
 #if defined(INFERENCE_HELPER_ENABLE_OPENCV)
-#define MODEL_NAME  "mobilenet_v2.onnx"
-//#define MODEL_NAME  "mobilenet_v2.xml"    /* for OpenVINO */
+#define MODEL_NAME  "mobilenet_v2/mobilenet_v2.onnx"
+//#define MODEL_NAME  "mobilenet_v2/mobilenet_v2.xml"    /* for OpenVINO */
 #define HAS_BACKGOUND false
 #define HAS_SOFTMAX  false
 #define INPUT_NAME  "input.1"
@@ -53,7 +53,7 @@ limitations under the License.
 #define OUTPUT_NAME "466"
 #elif defined(INFERENCE_HELPER_ENABLE_TFLITE) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_XNNPACK) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_GPU) || defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_NNAPI)
 #if 1
-#define MODEL_NAME  "mobilenet_v2.tflite"
+#define MODEL_NAME  "mobilenet_v2/mobilenet_v2.tflite"
 #define HAS_BACKGOUND false
 #define HAS_SOFTMAX  true
 #define INPUT_NAME  "input_1"
@@ -63,7 +63,7 @@ limitations under the License.
 #define IS_RGB      true
 #define OUTPUT_NAME "Identity"
 #else
-#define MODEL_NAME  "mobilenet_v2_quant.tflite"
+#define MODEL_NAME  "mobilenet_v2/mobilenet_v2_quant.tflite"
 #define HAS_BACKGOUND false
 #define HAS_SOFTMAX  true
 #define INPUT_NAME  "input_1"
@@ -74,7 +74,7 @@ limitations under the License.
 #define OUTPUT_NAME "Identity"
 #endif
 #elif defined(INFERENCE_HELPER_ENABLE_TFLITE_DELEGATE_EDGETPU)
-#define MODEL_NAME  "mobilenet_v2_quant_edgetpu.tflite"
+#define MODEL_NAME  "mobilenet_v2/mobilenet_v2_quant_edgetpu.tflite"
 #define HAS_BACKGOUND false
 #define HAS_SOFTMAX  true
 #define INPUT_NAME  "input_1"
@@ -85,7 +85,7 @@ limitations under the License.
 #define OUTPUT_NAME "Identity"
 #elif defined(INFERENCE_HELPER_ENABLE_TENSORRT)
 #include "inference_helper_tensorrt.h"
-#define MODEL_NAME  "mobilenet_v2.onnx"
+#define MODEL_NAME  "mobilenet_v2/mobilenet_v2.onnx"
 #define HAS_BACKGOUND false
 #define HAS_SOFTMAX  false
 #define INPUT_NAME  "input.1"
@@ -95,7 +95,7 @@ limitations under the License.
 #define IS_RGB      true
 #define OUTPUT_NAME "466"
 #elif defined(INFERENCE_HELPER_ENABLE_NCNN)
-#define MODEL_NAME  "mobilenet_v2.ncnn.param"
+#define MODEL_NAME  "mobilenet_v2/mobilenet_v2.ncnn.param"
 #define HAS_BACKGOUND false
 #define HAS_SOFTMAX  false
 #define INPUT_NAME  "input.1"
@@ -105,7 +105,7 @@ limitations under the License.
 #define IS_RGB      true
 #define OUTPUT_NAME "466"
 #elif defined(INFERENCE_HELPER_ENABLE_MNN)
-#define MODEL_NAME  "mobilenet_v2.mnn"
+#define MODEL_NAME  "mobilenet_v2/mobilenet_v2.mnn"
 #define HAS_BACKGOUND false
 #define HAS_SOFTMAX  false
 #define INPUT_NAME  "input.1"
@@ -115,7 +115,7 @@ limitations under the License.
 #define IS_RGB      true
 #define OUTPUT_NAME "466"
 #elif defined(INFERENCE_HELPER_ENABLE_SNPE)
-#define MODEL_NAME  "mobilenet_v2_1.0_224.dlc"
+#define MODEL_NAME  "mobilenet_v2/mobilenet_v2_1.0_224.dlc"
 #define HAS_BACKGOUND true
 #define HAS_SOFTMAX  false
 #define TENSORTYPE  TensorInfo::kTensorTypeFp32
@@ -126,7 +126,7 @@ limitations under the License.
 #define OUTPUT_NAME "MobilenetV2/Predictions/Softmax:0"
 #elif defined(INFERENCE_HELPER_ENABLE_ARMNN)
 #if 1
-#define MODEL_NAME  "mobilenet_v2.tflite"
+#define MODEL_NAME  "mobilenet_v2/mobilenet_v2.tflite"
 #define HAS_BACKGOUND false
 #define HAS_SOFTMAX  true
 #define INPUT_NAME  "input_1"
@@ -136,7 +136,7 @@ limitations under the License.
 #define IS_RGB      true
 #define OUTPUT_NAME "Identity"
 #else
-#define MODEL_NAME  "mobilenet_v2.onnx"
+#define MODEL_NAME  "mobilenet_v2/mobilenet_v2.onnx"
 #define HAS_BACKGOUND false
 #define HAS_SOFTMAX  false
 #define INPUT_NAME  "input.1"
@@ -147,7 +147,7 @@ limitations under the License.
 #define OUTPUT_NAME "466"
 #endif
 #elif defined(INFERENCE_HELPER_ENABLE_NNABLA) || defined(INFERENCE_HELPER_ENABLE_NNABLA_CUDA)
-#define MODEL_NAME  "mobilenet_v2.nnp"
+#define MODEL_NAME  "mobilenet_v2/mobilenet_v2.nnp"
 #define HAS_BACKGOUND false
 #define HAS_SOFTMAX  false
 #define INPUT_NAME  "input.1"
@@ -158,7 +158,7 @@ limitations under the License.
 #define OUTPUT_NAME "466"
 #elif defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME) || defined(INFERENCE_HELPER_ENABLE_ONNX_RUNTIME_CUDA)
 #if defined(ANDROID) || defined(__ANDROID__)
-#define MODEL_NAME  "mobilenet_v2_op11.all.ort"
+#define MODEL_NAME  "mobilenet_v2/mobilenet_v2_op11.all.ort"
 #define HAS_BACKGOUND false
 #define HAS_SOFTMAX  false
 #define INPUT_NAME  "input.1"
@@ -168,7 +168,7 @@ limitations under the License.
 #define IS_RGB      true
 #define OUTPUT_NAME "536"
 #else
-#define MODEL_NAME  "mobilenet_v2.onnx"
+#define MODEL_NAME  "mobilenet_v2/mobilenet_v2.onnx"
 #define HAS_BACKGOUND false
 #define HAS_SOFTMAX  false
 #define INPUT_NAME  "input.1"
@@ -179,7 +179,7 @@ limitations under the License.
 #define OUTPUT_NAME "466"
 #endif
 #elif defined(INFERENCE_HELPER_ENABLE_LIBTORCH) || defined(INFERENCE_HELPER_ENABLE_LIBTORCH_CUDA)
-#define MODEL_NAME  "mobilenet_v2.jit.pt"
+#define MODEL_NAME  "mobilenet_v2/mobilenet_v2.jit.pt"
 #define HAS_BACKGOUND false
 #define HAS_SOFTMAX  false
 #define INPUT_NAME  "dummy"
@@ -202,7 +202,7 @@ limitations under the License.
 #define MODEL_NAME  "error"
 #endif
 
-#define LABEL_NAME  "imagenet_labels.txt"
+#define LABEL_NAME  "mobilenet_v2/imagenet_labels.txt"
 
 
 /*** Function ***/
