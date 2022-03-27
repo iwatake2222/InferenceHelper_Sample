@@ -1,8 +1,8 @@
-# pedestrian-and-vehicle-detector-adas-0001 with TensorFlowLite/TensorRT/OpenCV/OpenVINO/MNN/ArmNN/NNabla/ONNXRuntime/TensorFlow in C++ on Windows/Linux/Linux(Arm)/Android
+# pedestrian-and-vehicle-detector-adas-0001 with TensorFlow Lite / TensorRT / OpenCV / OpenVINO / MNN / Arm NN / NNabla / ONNX Runtime / TensorFlow in C++ on Windows / Linux / Linux(Arm) / Android
 
 ![00_doc/demo.jpg](00_doc/demo.jpg)]
 
-## Target Environment, How to Build, How to Run
+## How to Run
 1. Please follow the instruction: https://github.com/iwatake2222/InferenceHelper_Sample
 2. Build  `pj_det_pedestrian-and-vehicle-detector-adas-0001` project (this directory)
 

@@ -1,8 +1,8 @@
-# YOLOX with TensorFlowLite/TensorRT/OpenCV/OpenVINO/ncnn/MNN/ArmNN/ONNXRuntime/TensorFlow in C++ on Windows/Linux/Linux(Arm)/Android
+# YOLOX with TensorFlow Lite / TensorRT / OpenCV / OpenVINO / ncnn / MNN / Arm NN / ONNX Runtime / TensorFlow in C++ on Windows / Linux / Linux(Arm) / Android
 
 ![00_doc/demo.jpg](00_doc/demo.jpg)]
 
-## Target Environment, How to Build, How to Run
+## How to Run
 1. Please follow the instruction: https://github.com/iwatake2222/InferenceHelper_Sample
 2. Build `pj_det_yolox` project (this directory)
 
